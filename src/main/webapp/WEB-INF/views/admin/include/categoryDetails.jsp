@@ -65,7 +65,7 @@
                         "category_name": category_name,
                         "category_image_src": category_image_src
                     };
-                    doAction(dataList, "admin/category/" + category_id, "PUT");
+                    doAction(dataList, "admin/category/" + category_id, "POST");
                 });
             }
 
@@ -121,7 +121,8 @@
                 success: function (data) {
                     $(fileDom).attr("disabled", false).prev("span").text("Upload Image");
                     if (data.success) {
-                        $(fileDom).parent('.details_picList_fileUpload').before("<li><img src='${pageContext.request.contextPath}/static/images/store/" + data.fileName + "' id='pic_category'  width='1190px' height='150px'/></li>").css("display", "none");
+                        <%--$(fileDom).parent('.details_picList_fileUpload').before("<li><img src='${pageContext.request.contextPath}/static/images/store/" + data.fileName + "' id='pic_category' /></li>").css("display", "none");--%>
+                        $(fileDom).parent('.details_picList_fileUpload').before("<li><img src='" + data.fileUrl + "' id='pic_category' width='300px' /></li>").css("display", "none");
                     } else {
                         alert("Image upload error！");
                     }
@@ -149,7 +150,6 @@
                         $("#btn-ok,#btn-close").unbind("click").click(function () {
                             $('#modalDiv').modal("hide");
                             setTimeout(function () {
-                                //ajax请求页面
                                 ajaxUtil.getPage("category/" + data.category_id, null, true);
                             }, 170);
                         });
@@ -198,8 +198,9 @@
     <span class="details_title text_info">Category Image</span>
     <ul class="details_picList" id="category_list">
         <c:if test="${requestScope.category.category_image_src != null}">
-            <li><img src="${requestScope.category.category_image_src}"
-                    id="pic_category" width="300px" height="435px"/></li>
+            <li>
+                <img src="${requestScope.category.category_image_src}" id="pic_category" width="300px" height="435px" />
+            </li>
         </c:if>
         <li class="details_picList_fileUpload">
             <svg class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="1528"

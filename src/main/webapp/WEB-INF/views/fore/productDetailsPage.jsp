@@ -98,18 +98,18 @@
 <div class="context">
     <div class="context_left">
         <div class="context_img_ks">
-            <img src="${requestScope.product.singleProductImageList[0].productImage_src}"
+            <img src="${requestScope.product.singleProductImageList[0].productImage_src == null ? "/static/images/fore/WebsiteImage/noimg.jpg" : requestScope.product.singleProductImageList[0].productImage_src}"
                  width="800px" height="800px">
         </div>
         <div class="context_img">
-            <img src="${requestScope.product.singleProductImageList[0].productImage_src}"
+            <img src="${requestScope.product.singleProductImageList[0].productImage_src == null ? "/static/images/fore/WebsiteImage/noimg.jpg" : requestScope.product.singleProductImageList[0].productImage_src}"
                  class="context_img_main" width="400px" height="400px"/>
             <div class="context_img_winSelector"></div>
         </div>
         <ul class="context_img_ul">
             <c:forEach var="img" items="${requestScope.product.singleProductImageList}">
-                <li class="context_img_li"><img
-                        src="${img.productImage_src}"/>
+                <li class="context_img_li">
+                    <img src="${img.productImage_src}" />
                 </li>
             </c:forEach>
         </ul>
@@ -128,11 +128,11 @@
             </div>--%>
             <dl class="context_price_panel">
                 <dt>Price</dt>
-                <dd><em>¥</em><span>${requestScope.product.product_price}0</span></dd>
+                <dd><em>$</em><span>${requestScope.product.product_price}0</span></dd>
             </dl>
             <dl class="context_promotePrice_panel">
                 <dt>Sale price</dt>
-                <dd><em>¥</em><span>${requestScope.product.product_sale_price}0</span></dd>
+                <dd><em>$</em><span>${requestScope.product.product_sale_price}0</span></dd>
             </dl>
         </div>
         <ul class="context_other_panel">

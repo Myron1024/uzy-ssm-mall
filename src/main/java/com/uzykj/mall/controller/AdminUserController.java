@@ -114,7 +114,7 @@ public class AdminUserController {
             log.info("用户隐私加密");
             user.setUser_realname(user.getUser_realname().substring(0, 1) + "*");
         } else {
-            user.setUser_realname("未命名");
+            user.setUser_realname("NULL");
         }
 
         map.put("user", user);

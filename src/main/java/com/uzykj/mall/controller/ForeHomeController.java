@@ -3,14 +3,18 @@ package com.uzykj.mall.controller;
 import com.alibaba.fastjson.JSONObject;
 import com.uzykj.mall.entity.Category;
 import com.uzykj.mall.entity.Product;
+import com.uzykj.mall.entity.ProductImage;
 import com.uzykj.mall.entity.User;
+import com.uzykj.mall.entity.enums.ImageTypeEnum;
 import com.uzykj.mall.service.CategoryService;
 import com.uzykj.mall.service.ProductImageService;
 import com.uzykj.mall.service.ProductService;
 import com.uzykj.mall.util.OrderUtil;
 import com.uzykj.mall.util.PageUtil;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -35,6 +39,8 @@ public class ForeHomeController {
     @Autowired
     private ProductImageService productImageService;
 
+    @Value("${storeService.local.local_file_path}")
+    private String localFilePath;
 
     //转到前台-主页
     @GetMapping("/")
@@ -43,15 +49,27 @@ public class ForeHomeController {
         User user = (User) session.getAttribute("USER_SESSION");
         map.put("user", user);
 
+        String filePath = session.getServletContext().getRealPath("/") + localFilePath;
+
         List<Category> categoryList = categoryService.getList(null, null);
         for (Category category : categoryList) {
             log.info("获取分类id为{}的产品集合，按产品ID倒序排序", category.getCategory_id());
-            List<Product> productList = productService.getList(new Product().setProduct_category(category), new Byte[]{0, 2}, new OrderUtil("product_id", true), new PageUtil(0, 8));
+            List<Product> productList = productService.getList(new Product().setProduct_category(category), new Byte[]{0, 2}, new OrderUtil("product_id", true), new PageUtil(0, 10));
             if (productList != null) {
                 for (Product product : productList) {
                     Integer product_id = product.getProduct_id();
                     log.info("获取产品id为{}的产品预览图片信息", product_id);
-                    product.setSingleProductImageList(productImageService.getList(product_id, new PageUtil(0, 1)));
+                    List<ProductImage> list = productImageService.getList(product_id, new PageUtil(0, 1));
+                    list.forEach(x -> {
+                        if (StringUtils.isEmpty(x.getProductImage_src())) {
+                            x.setProductImage_src("/static/images/fore/WebsiteImage/noimg.jpg");
+                        } else {
+                            if (!x.getProductImage_src().startsWith("http")) {
+                                x.setProductImage_src(localFilePath + x.getProductImage_src());
+                            }
+                        }
+                    });
+                    product.setSingleProductImageList(list);
                 }
             }
             category.setProductList(productList);

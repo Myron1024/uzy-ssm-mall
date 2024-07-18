@@ -177,15 +177,15 @@ $(function(){
                         <span></span>
                         <p>${category.category_name}</p>
                     </div>
-                    <a href="${pageContext.request.contextPath}/product?category_id=${category.category_id}"><img
-                            class="banner_goods_show"
-                            src="${category.category_image_src}"></a>
+<%--                    <a href="${pageContext.request.contextPath}/product?category_id=${category.category_id}"><img--%>
+<%--                            class="banner_goods_show"--%>
+<%--                            src="${category.category_image_src}"></a>--%>
                     <div class="banner_goods_items">
                         <c:forEach items="${category.productList}" var="product" varStatus="i">
-                            <c:if test="${i.index<8}">
+                            <c:if test="${i.index<10}">
                                 <div class="banner_goods_item">
                                     <a href="product/${product.product_id}" class="goods_link"></a>
-                                    <img src="${product.singleProductImageList[0].productImage_src}">
+                                    <img src="${product.singleProductImageList[0].productImage_src == null ? "/static/images/fore/WebsiteImage/noimg.jpg" : product.singleProductImageList[0].productImage_src}">
                                     <a href="product/${product.product_id}"
                                        class="goods_name">${product.product_name}</a>
                                     <span class="goods_price">$${product.product_sale_price}</span>

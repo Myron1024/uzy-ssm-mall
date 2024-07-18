@@ -12,6 +12,7 @@ import com.uzykj.mall.util.FileUtil;
 import com.uzykj.mall.util.PageUtil;
 import com.uzykj.mall.util.qiniu.QiniuUtil;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
@@ -73,6 +74,12 @@ public class AdminCategoryController {
     public String goToDetailsPage(Map<String, Object> map,
                                   @PathVariable Integer cid/* 分类ID */) {
         Category category = categoryService.get(cid);
+        if (!StringUtils.isBlank(category.getCategory_image_src())) {
+            // localFilePath
+            if (!category.getCategory_image_src().startsWith("http")) {
+                category.setCategory_image_src(localFilePath + category.getCategory_image_src());
+            }
+        }
         category.setPropertyList(propertyService.getList(new Property().setProperty_category(category), null));
 
         map.put("category", category);
@@ -108,7 +115,7 @@ public class AdminCategoryController {
 
     //更新分类信息-ajax
     @ResponseBody
-    @PutMapping("/category/{category_id}")
+    @PostMapping("/category/{category_id}")
     public String updateCategory(@RequestParam String category_name/* 分类名称 */,
                                  @RequestParam String category_image_src/* 分类图片路径 */,
                                  @PathVariable("category_id") Integer category_id/* 分类ID */) {
@@ -261,11 +268,12 @@ public class AdminCategoryController {
                     // 转存文件
                     assert originalFileName != null;
                     String fileName = FileUtil.generNewFileName(originalFileName);
-                    String filePath = FileUtil.generLocalFilePath(session, localFilePath, ImageTypeEnum.category.toString());
+                    String filePath = session.getServletContext().getRealPath("/") + localFilePath + ImageTypeEnum.category;
                     log.info("文件本地上传路径：" + filePath + fileName);
                     FileUtil.createDirectory(filePath);
                     file.transferTo(new File(filePath + fileName));
-                    String fileUrl = FileUtil.generFileUrl(localFileUrl, ImageTypeEnum.category.toString(), fileName);
+//                    String fileUrl = FileUtil.generFileUrl(localFileUrl, ImageTypeEnum.category.toString(), fileName);
+                    String fileUrl = localFileUrl + localFilePath + ImageTypeEnum.category + fileName;
                     object.put("success", true);
                     object.put("fileUrl", fileUrl);
                 }

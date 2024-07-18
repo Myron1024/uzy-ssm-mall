@@ -181,7 +181,7 @@ function getGuessLoveProducts() {
                     var product_id = data.loveProductList[i].product_id;
                     var product_sale_price = data.loveProductList[i].product_sale_price;
                     $(".context_ul_goodsList").children("ul").append("<li class='context_ul_main'><div class='context_ul_img'>" +
-                        "<a href='/product/" + product_id + "'><img src='/static/images/item/productSinglePicture/" + src + "'/></a><p>¥" + product_sale_price + ".00</p></div></li>"
+                        "<a href='/product/" + product_id + "'><img src='/static/images/item/productSinglePicture/" + src + "'/></a><p>$" + product_sale_price + ".00</p></div></li>"
                     );
                 }
             }
