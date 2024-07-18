@@ -35,30 +35,30 @@
         <p id="container_login">
             <c:choose>
                 <c:when test="${requestScope.user.user_name==null}">
-                    <em>Ding，欢迎来柚子云购商城</em>
-                    <a href="${pageContext.request.contextPath}/login" style="color:#FA0808">请登录</a>
-                    <a href="${pageContext.request.contextPath}/register">免费注册</a>
+                    <em>Ding，Welcome to ELITE MALL</em>
+                    <a href="${pageContext.request.contextPath}/login" style="color:#FA0808">Login</a>
+                    <a href="${pageContext.request.contextPath}/register">Register</a>
                 </c:when>
                 <c:otherwise>
                     <em>Hi，</em>
                     <a href="${pageContext.request.contextPath}/userDetails" class="userName" target="_blank">${requestScope.user.user_name}</a>
-                    <a href="${pageContext.request.contextPath}/login/logout">退出</a>
+                    <a href="${pageContext.request.contextPath}/login/logout">Log out</a>
                     <div id="out" style="display:none;"><img src='${pageContext.request.contextPath}/static/images/fore/WebsiteImage/images/tou.png' class='headimg' style="margin-top:18px;"></div>
                 </c:otherwise>
             </c:choose>
         </p>
         <ul class="quick_li">
         <li class="quick_li_cart">
-                <a href="${pageContext.request.contextPath}">首页</a>
+                <a href="${pageContext.request.contextPath}/">Home</a>
             </li>
             <li class="quick_li_MyTaobao">
                 <div class="sn_menu">
-                 <a href="${pageContext.request.contextPath}/order/0/10">我的订单</a>
+                 <a href="${pageContext.request.contextPath}/order/0/10">Orders</a>
                 </div>
             </li>
             <li class="quick_li_cart">
                 <img src="${pageContext.request.contextPath}/static/images/fore/WebsiteImage/buyCar.png">
-                <a href="${pageContext.request.contextPath}/order/cart">购物车</a>
+                <a href="${pageContext.request.contextPath}/order/cart">Cart</a>
             </li>
         </ul>
     </div>

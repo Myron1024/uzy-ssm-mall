@@ -2,7 +2,7 @@ $(function () {
     //搜索框验证
     $('form').submit(function () {
         if ($(this).find('input[name="product_name"]').val() === '') {
-            alert('请输入关键字！');
+            alert('Please input keyword！');
             return false;
         }
     });
@@ -19,9 +19,9 @@ $(function () {
         }
         //检索
         if ($(this).parent('ul').attr('data-value') === undefined) {
-            location.href = '/mall/product/0/20?orderBy=' + orderBy + "&isDesc=" + isDesc + "&category_id=" + $(this).parent('ul').attr('data-type');
+            location.href = '/product/0/20?orderBy=' + orderBy + "&isDesc=" + isDesc + "&category_id=" + $(this).parent('ul').attr('data-type');
         } else {
-            location.href = '/mall/product/0/20?orderBy=' + orderBy + "&isDesc=" + isDesc + "&product_name=" + $(this).parent('ul').attr('data-value');
+            location.href = '/product/0/20?orderBy=' + orderBy + "&isDesc=" + isDesc + "&product_name=" + $(this).parent('ul').attr('data-value');
         }
     });
     //点击产品图片时

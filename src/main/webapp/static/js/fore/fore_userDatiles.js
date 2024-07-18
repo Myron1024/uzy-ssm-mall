@@ -7,7 +7,7 @@ $(function () {
     $('#select_user_address_province').change(function () {
         $.ajax({
             type: "GET",
-            url: "/mall/address/" + $(this).val(),
+            url: "/address/" + $(this).val(),
             data: null,
             dataType: "json",
             success: function (data) {
@@ -45,7 +45,7 @@ $(function () {
     $("#select_user_address_city").change(function () {
         $.ajax({
             type: "GET",
-            url: "/mall/address/" + $(this).val(),
+            url: "/address/" + $(this).val(),
             data: null,
             dataType: "json",
             success: function (data) {
@@ -79,32 +79,32 @@ $(function () {
     //用户名input获取光标
     $("#user_name").focus(function () {
         $(this).css("border", "1px solid #3879D9")
-            .next().text("请输入用户名").css("display", "inline-block").css("color", "#00A0E9");
+            .next().text("Please enter username").css("display", "inline-block").css("color", "#00A0E9");
     });
     //密码input获取光标
     $("#user_password").focus(function () {
         $(this).css("border", "1px solid #3879D9")
-            .next().text("请输入密码").css("display", "inline-block").css("color", "#00A0E9");
+            .next().text("Please enter password").css("display", "inline-block").css("color", "#00A0E9");
     });
     //再次输入密码input获取光标
     $("#user_password_one").focus(function () {
         $(this).css("border", "1px solid #3879D9")
-            .next().text("请再次输入密码").css("display", "inline-block").css("color", "#00A0E9");
+            .next().text("Please enter password").css("display", "inline-block").css("color", "#00A0E9");
     });
     //昵称input获取光标
     $("#user_nickname").focus(function () {
         $(this).css("border", "1px solid #3879D9")
-            .next().text("请输入昵称").css("display", "inline-block").css("color", "#00A0E9");
+            .next().text("Please enter nickname").css("display", "inline-block").css("color", "#00A0E9");
     });
     //出生日期input获取光标
     $("#user_birthday").focus(function () {
         $(this).css("border", "1px solid #3879D9")
-            .next().text("请输入出生日期").css("display", "inline-block").css("color", "#00A0E9");
+            .next().text("Please enter birthday").css("display", "inline-block").css("color", "#00A0E9");
     });
     //真实姓名input获取光标
     $("#user_realname").focus(function () {
         $(this).css("border", "1px solid #3879D9")
-            .next().text("请输入真实姓名").css("display", "inline-block").css("color", "#00A0E9");
+            .next().text("Please enter real name").css("display", "inline-block").css("color", "#00A0E9");
     });
 
     //input离开光标
@@ -130,31 +130,31 @@ $(function () {
         var reg = new RegExp(/[A-Za-z].*[0-9]|[0-9].*[A-Za-z]/);
         if (user_realname == null || user_realname === "") {
             $("#user_realname").css("border", "1px solid red")
-                .next().text("请输入真实姓名").css("display", "inline-block").css("color", "red");
+                .next().text("Please enter real name").css("display", "inline-block").css("color", "red");
             return false;
         } else if (user_password == null || user_password === "") {
             $("#user_password").css("border", "1px solid red")
-                .next().text("请输入密码").css("display", "inline-block").css("color", "red");
+                .next().text("Please enter password").css("display", "inline-block").css("color", "red");
             return false;
         } else if (user_password_one == null || user_password_one === "") {
             $("#user_password_one").css("border", "1px solid red")
-                .next().text("请重复输入密码").css("display", "inline-block").css("color", "red");
+                .next().text("Please enter password").css("display", "inline-block").css("color", "red");
             return false;
         } else if (!reg.test(user_password)) {
             $("#user_password").css("border", "1px solid red")
-                .next().text("密码格式必须包含数字和字母").css("display", "inline-block").css("color", "red");
+                .next().text("Password must contain numbers and letters").css("display", "inline-block").css("color", "red");
             return false;
         } else if (user_password !== user_password_one) {
             $("#user_password_one").css("border", "1px solid red")
-                .next().text("两次输入密码不相同").css("display", "inline-block").css("color", "red");
+                .next().text("The passwords you entered twice are different").css("display", "inline-block").css("color", "red");
             return false;
         } else if (user_nickname == null || user_nickname === "") {
             $("#user_nickname").css("border", "1px solid red")
-                .next().text("请输入昵称").css("display", "inline-block").css("color", "red");
+                .next().text("Please enter nickname").css("display", "inline-block").css("color", "red");
             return false;
         } else if (user_birthday == null || user_birthday === "") {
             $("#user_birthday").css("border", "1px solid red")
-                .next().text("请选择出生日期").css("display", "inline-block").css("color", "red");
+                .next().text("Please enter birthday").css("display", "inline-block").css("color", "red");
             return false;
         }
         return true;
@@ -182,7 +182,7 @@ function uploadImage(fileDom) {
     formData.append("file", file);
     //上传图片
     $.ajax({
-        url: "/mall/user/uploadUserHeadImage",
+        url: "/user/uploadUserHeadImage",
         type: "post",
         data: formData,
         contentType: false,
@@ -191,7 +191,7 @@ function uploadImage(fileDom) {
         mimeType: "multipart/form-data",
         success: function (data) {
             if (data.success) {
-                $(fileDom).prev("img").attr("src","/mall/static/images/item/userProfilePicture/"+data.fileName);
+                $(fileDom).prev("img").attr("src","/static/images/item/userProfilePicture/"+data.fileName);
                 $("#user_profile_picture_src_value").val(data.fileName);
             } else {
                 alert("图片上传异常！");

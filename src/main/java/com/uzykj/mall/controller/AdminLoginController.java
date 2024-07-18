@@ -35,8 +35,9 @@ public class AdminLoginController {
                              @RequestParam String password) {
         JSONObject object = new JSONObject();
         object.put("success", false);
-        if (StringUtils.isNotEmpty(username) && StringUtils.isNotEmpty(password)) {
+        if (StringUtils.isEmpty(username) || StringUtils.isEmpty(password)) {
             log.warn("参数有误");
+            return object.toJSONString();
         }
 
         Admin admin = adminService.login(username, password);

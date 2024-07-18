@@ -7,7 +7,7 @@ $(function () {
     $('#select_user_address_province').change(function () {
         $.ajax({
             type: "GET",
-            url: "/mall/address/" + $(this).val(),
+            url: "/address/" + $(this).val(),
             data: null,
             dataType: "json",
             success: function (data) {
@@ -45,7 +45,7 @@ $(function () {
     $("#select_user_address_city").change(function () {
         $.ajax({
             type: "GET",
-            url: "/mall/address/" + $(this).val(),
+            url: "/address/" + $(this).val(),
             data: null,
             dataType: "json",
             success: function (data) {
@@ -82,27 +82,27 @@ $(function () {
     //用户名input获取光标
     $("#user_name").focus(function () {
         $(this).css("border", "1px solid #3879D9")
-            .next().text("请输入用户名").css("display", "inline-block").css("color", "#00A0E9");
+            .next().text("Please input username").css("display", "inline-block").css("color", "#00A0E9");
     });
     //密码input获取光标
     $("#user_password").focus(function () {
         $(this).css("border", "1px solid #3879D9")
-            .next().text("请输入密码").css("display", "inline-block").css("color", "#00A0E9");
+            .next().text("Please input password").css("display", "inline-block").css("color", "#00A0E9");
     });
     //再次输入密码input获取光标
     $("#user_password_one").focus(function () {
         $(this).css("border", "1px solid #3879D9")
-            .next().text("请再次输入密码").css("display", "inline-block").css("color", "#00A0E9");
+            .next().text("Please input password").css("display", "inline-block").css("color", "#00A0E9");
     });
     //昵称input获取光标
     $("#user_nickname").focus(function () {
         $(this).css("border", "1px solid #3879D9")
-            .next().text("请输入昵称").css("display", "inline-block").css("color", "#00A0E9");
+            .next().text("Please input nickname").css("display", "inline-block").css("color", "#00A0E9");
     });
     //出生日期input获取光标
     $("#user_birthday").focus(function () {
         $(this).css("border", "1px solid #3879D9")
-            .next().text("请输入出生日期").css("display", "inline-block").css("color", "#00A0E9");
+            .next().text("Please input birthday").css("display", "inline-block").css("color", "#00A0E9");
     });
 
     //input离开光标
@@ -128,36 +128,36 @@ $(function () {
         var reg = new RegExp(/[A-Za-z].*[0-9]|[0-9].*[A-Za-z]/);
         if (user_name == null || user_name === "") {
             $("#user_name").css("border", "1px solid red")
-                .next().text("请输入用户名").css("display", "inline-block").css("color", "red");
+                .next().text("Please enter username").css("display", "inline-block").css("color", "red");
             return false;
         } else if (user_password == null || user_password === "") {
             $("#user_password").css("border", "1px solid red")
-                .next().text("请输入密码").css("display", "inline-block").css("color", "red");
+                .next().text("Please enter password").css("display", "inline-block").css("color", "red");
             return false;
         } else if (user_password_one == null || user_password_one === "") {
             $("#user_password_one").css("border", "1px solid red")
-                .next().text("请重复输入密码").css("display", "inline-block").css("color", "red");
+                .next().text("Please enter password").css("display", "inline-block").css("color", "red");
             return false;
         }else if(!reg.test(user_password)){
             $("#user_password").css("border", "1px solid red")
-                .next().text("密码格式必须包含数字和字母").css("display", "inline-block").css("color", "red");
+                .next().text("Password must contain numbers and letters").css("display", "inline-block").css("color", "red");
             return false;
         } else if (user_password !== user_password_one) {
             $("#user_password_one").css("border", "1px solid red")
-                .next().text("两次输入密码不相同").css("display", "inline-block").css("color", "red");
+                .next().text("The passwords you entered twice are different").css("display", "inline-block").css("color", "red");
             return false;
         } else if (user_nickname == null || user_nickname === "") {
             $("#user_nickname").css("border", "1px solid red")
-                .next().text("请输入昵称").css("display", "inline-block").css("color", "red");
+                .next().text("Please enter nickname").css("display", "inline-block").css("color", "red");
             return false;
         } else if (user_birthday == null || user_birthday === "") {
             $("#user_birthday").css("border", "1px solid red")
-                .next().text("请选择出生日期").css("display", "inline-block").css("color", "red");
+                .next().text("Please enter your birthday").css("display", "inline-block").css("color", "red");
             return false;
         }
         $.ajax({
             type: "POST",
-            url: "/mall/register/doRegister",
+            url: "/register/doRegister",
             data: {
                 "user_name": user_name,
                 "user_password": user_password,
@@ -168,14 +168,15 @@ $(function () {
             },
             dataType: "json",
             success: function (data) {
+                debugger;
                 if (data.success) {
-                    $(".msg").stop(true, true).animate({
+                    $(".msg").show().stop(true, true).animate({
                         opacity: 1
-                    }, 550, function () {
+                    }, 1500, function () {
                         $(".msg").animate({
                             opacity: 0
                         }, 1500, function () {
-                            location.href = "/mall/login";
+                            location.href = "/login";
                         });
                     });
                 } else {

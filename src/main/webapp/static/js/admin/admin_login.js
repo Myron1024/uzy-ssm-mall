@@ -39,32 +39,32 @@ $(function () {
         var username = $.trim($("#input_username").val());
         var password = $.trim($("#input_password").val());
         if(username === "" || password === "") {
-            styleUtil.errorShow($("#txt_error_msg"),"请输入用户名和密码");
+            styleUtil.errorShow($("#txt_error_msg"),"Please input username and password");
             return;
         }
         $.ajax({
-            url: "/mall/admin/login/doLogin",
+            url: "/admin/login/doLogin",
             type:"post",
+            dataType: "json",
             data: {"username":username,"password":password},
             success:function (data) {
-                $("#btn_login").val("登录");
+                $("#btn_login").val("Login");
                 if (data.success) {
                     cookieUtil.setCookie("username", username, 30);
-                    window.location.href = "/mall/admin";
+                    location.href = "/admin";
                 } else {
-                    styleUtil.errorShow($("#txt_error_msg"), "用户名或密码错误");
+                    styleUtil.errorShow($("#txt_error_msg"), "Username/password incorrect！");
                 }
             },
             beforeSend:function () {
-                $("#btn_login").val("登录中...");
+                $("#btn_login").val("Login...");
             },
             error:function (data) {
             }
         });
+        return false;
     });
-    //获得文本框焦点时
     $("#input_username,#input_password").focus(function () {
-        //移除校验错误
         var msg = $("#txt_error_msg");
         styleUtil.errorHide(msg);
     });
@@ -80,23 +80,20 @@ function initialCookie() {
         if(url !== null) {
             $("#div_background").css("background-image", url);
         } else {
-            $("#div_background").css("background-image", "url(/mall/static/images/admin/loginPage/background-1.jpg)");
+            $("#div_background").css("background-image", "url(/static/images/admin/loginPage/background-1.jpg)");
         }
         if(username !== null){
             $("#input_username").val(username);
         }
     } else {
-        $("#div_background").css("background-image", "url(/mall/static/images/admin/loginPage/background-1.jpg)");
+        $("#div_background").css("background-image", "url(/static/images/admin/loginPage/background-1.jpg)");
     }
 }
-//初始化页面数据
 function initialData() {
-    //顶部时间
     $("#txt_date").text(new Date().toLocaleString());
     setInterval(function () {
         $("#txt_date").text(new Date().toLocaleString());
     }, 1000);
-    //表单焦点
     var txt_username = $("#input_username");
     var username = $.trim(txt_username.val());
     if(username !== null && username !== ""){

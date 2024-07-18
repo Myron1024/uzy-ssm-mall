@@ -5,14 +5,14 @@
     <script>
         var myChart;
         $(function () {
-            $.getJSON('/mall/static/js/basicTheme.json', function (themeJSON) {
+            $.getJSON('/static/js/basicTheme.json', function (themeJSON) {
                 echarts.registerTheme('basicTheme', themeJSON);
                 // 基于准备好的dom，初始化eCharts实例
                 myChart = echarts.init($("#chartDiv")[0], "basicTheme");
                 // 指定图表的配置项和数据
                 var option = {
                     title: {
-                        text: '商城订单交易额'
+                        text: 'Order Amount'
                     },
                     tooltip: {
                         trigger: 'axis',
@@ -24,7 +24,7 @@
                         }
                     },
                     legend: {
-                        data: ['总交易额', '交易完成', '等待买家确认', '等待卖家发货', '等待买家付款']
+                        data: ['Total Amount', 'Completed Order', 'To Confirm', 'To Ship', 'To Pay']
                     },
                     grid: {
                         left: '3%',
@@ -42,7 +42,7 @@
                     },
                     series: [
                         {
-                            name: '总交易额',
+                            name: 'Total Amount',
                             type: 'line',
                             label: {
                                 normal: {
@@ -53,22 +53,22 @@
                             data: []
                         },
                         {
-                            name: '交易完成',
+                            name: 'Completed Order',
                             type: 'line',
                             data: []
                         },
                         {
-                            name: '等待买家确认',
+                            name: 'To Confirm',
                             type: 'line',
                             data: []
                         },
                         {
-                            name: '等待卖家发货',
+                            name: 'To Ship',
                             type: 'line',
                             data: []
                         },
                         {
-                            name: '等待买家付款',
+                            name: 'To Pay',
                             type: 'line',
                             data: []
                         }
@@ -126,7 +126,7 @@
         function getChartData(beginDate, endDate, jsonObject) {
             if (jsonObject == null) {
                 $.ajax({
-                    url: "/mall/admin/home/charts",
+                    url: "/admin/home/charts",
                     type: "get",
                     data: {"beginDate": beginDate, "endDate": endDate},
                     dataType: "json",
@@ -139,19 +139,19 @@
                                 data: data.dateStr
                             },
                             series: [{
-                                name: "总交易额",
+                                name: "Total Amount",
                                 data: data.orderTotalArray
                             }, {
-                                name: "交易完成",
+                                name: "Completed Order",
                                 data: data.orderSuccessArray
                             }, {
-                                name: "等待买家确认",
+                                name: "To Confirm",
                                 data: data.orderUnconfirmedArray
                             }, {
-                                name: "等待卖家发货",
+                                name: "To Ship",
                                 data: data.orderNotShippedArray
                             }, {
-                                name: "等待买家付款",
+                                name: "To Pay",
                                 data: data.orderUnpaidArray
                             }]
                         });
@@ -168,19 +168,19 @@
                         data: jsonObject.dateStr
                     },
                     series: [{
-                        name: "总交易额",
+                        name: "Total Amount",
                         data: jsonObject.orderTotalArray
                     }, {
-                        name: "交易完成",
+                        name: "Order Completed",
                         data: jsonObject.orderSuccessArray
                     }, {
-                        name: "等待买家确认",
+                        name: "To Confirm",
                         data: jsonObject.orderUnconfirmedArray
                     }, {
-                        name: "等待卖家发货",
+                        name: "To Ship",
                         data: jsonObject.orderNotShippedArray
                     }, {
-                        name: "等待买家付款",
+                        name: "To Pay",
                         data: jsonObject.orderUnpaidArray
                     }]
                 });
@@ -325,27 +325,27 @@
 </head>
 <body>
 <ul id="chartByDate">
-    <li><span class="chartDateBtn text_info select">最近一周</span></li>
-    <li class="chartDateBtn"><input class="chartDateInput" id="input_beginDate" type="date" title="开始日期"/><span
+    <li><span class="chartDateBtn text_info select">Last week</span></li>
+    <li class="chartDateBtn"><input class="chartDateInput" id="input_beginDate" type="date" title="Start Date"/><span
             class="split">—</span> <input class="chartDateInput details_unit" id="input_endDate" type="date"
-                                          title="结束日期"/></li>
-    <li><input class="frm_btn" id="btn_chart_search" type="button" value="查询"/></li>
+                                          title="End Date"/></li>
+    <li><input class="frm_btn" id="btn_chart_search" type="button" value="Search"/></li>
 </ul>
 <ul id="chartTotal">
     <li id="productTotal">
-        <p class="chartTotalTitle"><span class="chartTitleText">上架产品数量</span><span class="chartTitleUnit">(单位：件)</span>
+        <p class="chartTotalTitle"><span class="chartTitleText">New product volume</span><span class="chartTitleUnit"></span>
         </p>
         <span class="chartTotalValue">${requestScope.productTotal}</span>
         <div class="chartTotalStyle" style="background-color: #f89e9e"></div>
     </li>
     <li id="userTotal">
-        <p class="chartTotalTitle"><span class="chartTitleText">注册用户数量</span><span class="chartTitleUnit">(单位：人)</span>
+        <p class="chartTotalTitle"><span class="chartTitleText">New users</span><span class="chartTitleUnit"></span>
         </p>
         <span class="chartTotalValue">${requestScope.userTotal}</span>
         <div class="chartTotalStyle" style="background-color: #9ea7f5"></div>
     </li>
     <li id="orderTotal">
-        <p class="chartTotalTitle"><span class="chartTitleText">成交订单数量</span><span class="chartTitleUnit">(单位：件)</span>
+        <p class="chartTotalTitle"><span class="chartTitleText">Completed Orders</span><span class="chartTitleUnit"></span>
         </p>
         <span class="chartTotalValue">${requestScope.orderTotal}</span>
         <div class="chartTotalStyle" style="background-color: #ffdea4"></div>

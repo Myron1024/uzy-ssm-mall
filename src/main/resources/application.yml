@@ -1,10 +1,10 @@
 server:
-  port: 8010
+  port: 8080
   forward-headers-strategy: true
   servlet:
     session:
       timeout: 86400
-    context-path: /mall
+    context-path: /
 spring:
   transaction:
     rollback-on-commit-failure: true
@@ -14,7 +14,7 @@ spring:
     driver-class-name: com.mysql.cj.jdbc.Driver
     url: jdbc:mysql://127.0.0.1:3306/uzymall?serverTimezone=Asia/Shanghai&characterEncoding=utf8&useSSL=false&allowMultiQueries=true
     username: root
-    password: 123456
+    password: abc.123
   servlet:
     multipart:
       max-file-size: 2MB
@@ -71,8 +71,8 @@ storeService:
     mall_domain:
   local:
     # 本地存放地址
-    local_file_path: /work/resource/mall/
-    local_file_prefix: http://127.0.0.1:8080/mall/
+    local_file_path: /upload/
+    local_file_prefix: http://127.0.0.1:8080/
 
 payService:
   wxpay:

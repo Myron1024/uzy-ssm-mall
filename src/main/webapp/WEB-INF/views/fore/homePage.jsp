@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=Edge"/>
     <script src="${pageContext.request.contextPath}/static/js/fore/fore_home.js"></script>
     <link href="${pageContext.request.contextPath}/static/css/fore/fore_home.css" rel="stylesheet"/>
-    <title>柚子云购 -- 电子商城</title>
+    <title>ELITE MALL</title>
 </head>
 <style>
 .navSidebars{width:65px;position:fixed;right:10px;top:550px;background:#f8f6f6;z-index:99999}.navSidebars div{padding-top:10px;text-align:center;cursor:pointer;position:relative;height:42px}
@@ -21,8 +21,6 @@
 <nav>
     <%@ include file="include/navigator.jsp" %>
 <script>
-
-
     $(function () {
     	 /*  var barTop = $('.header').offset().top; */
          $(window).on('scroll',function () {
@@ -37,19 +35,16 @@
                  $('.header-wrap').css('display','none'); 
              }
          });
- 
-    	
     });
 </script>
 
     <div class="header">
-         <a href="${pageContext.request.contextPath}"><img src="${pageContext.request.contextPath}/static/images/fore/WebsiteImage/logo.png"></a>
+         <a href="${pageContext.request.contextPath}/"><img src="${pageContext.request.contextPath}/static/images/fore/WebsiteImage/logo.png"></a>
         <div class="mallSearch">
             <form action="${pageContext.request.contextPath}/product" method="get">
                 <div class="mallSearch-input">
-                    <input class="header_search_input" type="text" name="product_name" placeholder="搜索 商品名称"
-                           maxlength="50">
-                    <input class="header_search_button" type="submit" value="搜索">
+                    <input class="header_search_input" type="text" name="product_name"  maxlength="50">
+                    <input class="header_search_button" type="submit" value="Search">
                 </div>
             </form>
             <ul>
@@ -66,13 +61,12 @@
     </div>
     <div class="header-wrap">
 	    <div class="home_nav">
-		   <a href="${pageContext.request.contextPath}"><img src="${pageContext.request.contextPath}/static/images/fore/WebsiteImage/mallsmal.png"></a>
+		   <a href="${pageContext.request.contextPath}/"><img src="${pageContext.request.contextPath}/static/images/fore/WebsiteImage/mallsmal.png"></a>
 		        <div class="mallSearch">
 	            <form action="${pageContext.request.contextPath}/product" method="get">
 	                <div class="mallSearch-input">
-	                    <input class="header_search_input" type="text" name="product_name" placeholder="搜索 手机 电脑 配件"
-	                           maxlength="50">
-	                    <input class="header_search_button" type="submit" value="搜索">
+	                    <input class="header_search_input" type="text" name="product_name"  maxlength="50">
+	                    <input class="header_search_button" type="submit" value="Search">
 	                </div>
 	            </form>
 	        </div>
@@ -102,7 +96,7 @@
 <div class="navSidebars">
     <div class="right_arrow">
         <img src="${pageContext.request.contextPath}/static/images/fore/WebsiteImage/shouye-zhiding.png"/>
-        <br/>回到顶部</span>
+        <br/>Top</span>
         <div class="hover-content">
         </div>
     </div>
@@ -134,21 +128,21 @@ $(function(){
         <!-- 轮播（Carousel）项目 -->
         <div class="carousel-inner">
             <div class="item  active">
-                <div class="carousel-image" style="background-image:url(/mall/static/images/fore/WebsiteImage/banner/60.jpg);background-size:100% 100%;">
+                <div class="carousel-image" style="background-image:url(/static/images/fore/WebsiteImage/banner/60.png);background-size:100% 100%;">
                     <div class="carousel-caption active"></div>
                 </div>
             </div>
 
             <div class="item">
                 <div class="carousel-image"
-                     style="background-image: url(/mall/static/images/fore/WebsiteImage/banner/61.jpg);background-size:100% 100%;">
+                     style="background-image: url(/static/images/fore/WebsiteImage/banner/61.png);background-size:100% 100%;">
                     <div class="carousel-caption "></div>
                 </div>
             </div>
 
             <div class="item">
                 <div class="carousel-image"
-                     style="background-image: url(/mall/static/images/fore/WebsiteImage/banner/44.jpg);background-size:100% 100%;">
+                     style="background-image: url(/static/images/fore/WebsiteImage/banner/44.png);background-size:100% 100%;">
                     <div class="carousel-caption "></div>
                 </div>
             </div>
@@ -157,7 +151,7 @@ $(function(){
 
             <div class="item">
                 <div class="carousel-image"
-                     style="background-image: url(/mall/static/images/fore/WebsiteImage/banner/43.jpg);background-size:100% 100%;">
+                     style="background-image: url(/static/images/fore/WebsiteImage/banner/43.png);background-size:100% 100%;">
                     <div class="carousel-caption "></div>
                 </div>
             </div>
@@ -194,7 +188,7 @@ $(function(){
                                     <img src="${product.singleProductImageList[0].productImage_src}">
                                     <a href="product/${product.product_id}"
                                        class="goods_name">${product.product_name}</a>
-                                    <span class="goods_price">￥${product.product_sale_price}</span>
+                                    <span class="goods_price">$${product.product_sale_price}</span>
                                 </div>
                             </c:if>
                         </c:forEach>

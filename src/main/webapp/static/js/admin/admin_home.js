@@ -19,7 +19,7 @@ $(function () {
         //设置文本
         var title = $(this).children("span").text();
         $("#div_home_title").children("span").text(title);
-        document.title = "柚子云购 - " + title;
+        document.title = "ELITE - " + title;
     });
     //点击用户昵称或下拉箭头时
     $("#txt_home_nickname,#i_nickname_slide").click(function () {
@@ -31,7 +31,7 @@ $(function () {
         $(".menu_li[data-toggle=account]").click();
     });
     $("#nav_tools_admin_logout").click(function () {
-        location.href = "/mall/admin/login/logout";
+        location.href = "/admin/login/logout";
     });
 });
 
@@ -51,7 +51,7 @@ function createPageDiv(obj, pageUtil) {
     obj.before("<div id='pageDiv'></div>");
     var pageDiv = $("#pageDiv");
 
-    pageDiv.append("<ul><li data-name='firstPage'><a href='javascript:void(0)' onclick='getPage(0)' aria-label='首页'><span aria-hidden='true'>&laquo;</span></a></li><li data-name='prevPage'><a href='javascript:void(0)' onclick='getPage(" + (pageUtil.index - 1) + ")' aria-label='上一页'><span aria-hidden='true'>&lsaquo;</span></a></li></ul>");
+    pageDiv.append("<ul><li data-name='firstPage'><a href='javascript:void(0)' onclick='getPage(0)' aria-label='Home'><span aria-hidden='true'>&laquo;</span></a></li><li data-name='prevPage'><a href='javascript:void(0)' onclick='getPage(" + (pageUtil.index - 1) + ")' aria-label='上一页'><span aria-hidden='true'>&lsaquo;</span></a></li></ul>");
     var pageDivUl = $("#pageDiv>ul");
     for (var i = 1; i <= pageUtil.totalPage; i++) {
         if (i - pageUtil.index >= -5 && i - pageUtil.index <= 5) {

@@ -7,7 +7,7 @@ $(function () {
     //搜索框验证
     $('form').submit(function () {
         if ($(this).find("input[name='product_name']").val() === "") {
-            alert("请输入关键字！");
+            alert("Please input keyword！");
             return false;
         }
     });
@@ -99,7 +99,7 @@ $(function () {
         var yn = true;
         $(this).find(":text,:password").each(function () {
             if ($.trim($(this).val()) === "") {
-                styleUtil.errorShow($("#error_message_p"), "请输入用户名和密码！");
+                styleUtil.errorShow($("#error_message_p"), "Please input username and password！");
                 yn = false;
                 return yn;
             }
@@ -107,11 +107,11 @@ $(function () {
         if (yn) {
             $.ajax({
                 type: "POST",
-                url: "/mall/login/doLogin",
+                url: "/login/doLogin",
                 data: {"username": $.trim($("#name").val()), "password": $.trim($("#password").val())},
                 dataType: "json",
                 success: function (data) {
-                    $(".loginButton").val("登 录");
+                    $(".loginButton").val("Log in");
                     if (data.success) {
                         location.reload();
                     } else {
@@ -119,7 +119,7 @@ $(function () {
                     }
                 },
                 error: function (data) {
-                    $(".loginButton").val("登 录");
+                    $(".loginButton").val("Log in");
                     styleUtil.errorShow($("#error_message_p"), "服务器异常，请刷新页面再试！");
                 },
                 beforeSend: function () {
@@ -170,7 +170,7 @@ function SelectorMousemove(e) {
 function getGuessLoveProducts() {
     $.ajax({
         type: "GET",
-        url: "/mall/guess/" + $("#tid").val(),
+        url: "/guess/" + $("#tid").val(),
         data: {"guessNumber": $("#guessNumber").val()},
         dataType: "json",
         success: function (data) {
@@ -181,7 +181,7 @@ function getGuessLoveProducts() {
                     var product_id = data.loveProductList[i].product_id;
                     var product_sale_price = data.loveProductList[i].product_sale_price;
                     $(".context_ul_goodsList").children("ul").append("<li class='context_ul_main'><div class='context_ul_img'>" +
-                        "<a href='/mall/product/" + product_id + "'><img src='/mall/static/images/item/productSinglePicture/" + src + "'/></a><p>¥" + product_sale_price + ".00</p></div></li>"
+                        "<a href='/product/" + product_id + "'><img src='/static/images/item/productSinglePicture/" + src + "'/></a><p>¥" + product_sale_price + ".00</p></div></li>"
                     );
                 }
             }

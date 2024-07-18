@@ -42,7 +42,6 @@ public class ServletFilterConfig implements Filter{
 
 			if (user == null && !isURILogin(httpRequest.getRequestURI(), httpRequest)) {
 				if ( !isURILogin(httpRequest.getRequestURI(), httpRequest)) {
-					//========================
 					httpRespose.sendRedirect("/login");
 					return ;
 				}			

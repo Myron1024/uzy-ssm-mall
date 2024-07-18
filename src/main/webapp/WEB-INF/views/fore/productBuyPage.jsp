@@ -3,7 +3,7 @@
 <head>
     <script src="${pageContext.request.contextPath}/static/js/fore/fore_productBuy.js"></script>
     <link href="${pageContext.request.contextPath}/static/css/fore/fore_productBuyPage.css" rel="stylesheet"/>
-    <title>确认订单</title>
+    <title>Order Confirmation</title>
     <script>
         $(function () {
             $("span.address_province").text($("#select_order_address_province").find("option:selected").text());
@@ -20,26 +20,26 @@
     <div class="headerContext">
         <div class="mallLogo">
             <span class="mlogo">
-                <a href="${pageContext.request.contextPath}">
+                <a href="${pageContext.request.contextPath}/">
                     <s></s>
                 </a>
             </span>
         </div>
         <ol class="header-extra">
             <li class="step-done">
-                <div class="step-name">拍下商品</div>
+                <div class="step-name">Product Purchased</div>
                 <div class="step-no_first"></div>
             </li>
             <li class="step-no">
-                <div class="step-name">付款到支付宝</div>
+                <div class="step-name">Pay to Alipay</div>
                 <div class="step-no">2</div>
             </li>
             <li class="step-no">
-                <div class="step-name">确认收货</div>
+                <div class="step-name">Confirm</div>
                 <div class="step-no">3</div>
             </li>
             <li class="step-no">
-                <div class="step-name">评价</div>
+                <div class="step-name">Evaluate</div>
                 <div class="step-no_last">4</div>
             </li>
         </ol>
@@ -47,8 +47,8 @@
 </div>
 <div class="content">
     <div class="order_address">
-        <h2>输入收货地址</h2>
-        <label for="select_order_address_province">所在地区</label><span class="mustValue">*</span>
+        <h2>Delivery address</h2>
+        <label for="select_order_address_province">Address</label><span class="mustValue">*</span>
         <select class="selectpicker" id="select_order_address_province" data-size="8" data-live-search="true">
             <c:forEach items="${requestScope.addressList}" var="address" varStatus="i">
                 <option value="${address.address_areaId}"
@@ -68,27 +68,27 @@
             </c:forEach>
         </select>
         <div class="br"></div>
-        <label for="textarea_details_address" id="label_details_address">详细地址</label><span class="mustValue">*</span>
-        <textarea id="textarea_details_address">${requestScope.detailsAddress}</textarea>
+        <label for="textarea_details_address" id="label_details_address">Detail</label><span class="mustValue">*</span>
+        <textarea id="textarea_details_address" placeholder="Apt/Unit No.">${requestScope.detailsAddress}</textarea>
         <div class="br"></div>
-        <label for="input_order_post" style="min-width: 80px;" id="label_order_post">邮政编码</label><span></span>
+        <label for="input_order_post" style="min-width: 80px;" id="label_order_post">Postal Code</label><span></span>
         <input id="input_order_post" type="text" value="${requestScope.order_post}" maxlength="6"/>
         <div class="br"></div>
-        <label for="input_order_receiver" id="label_order_receiver">收货人姓名</label><span class="mustValue">*</span>
+        <label for="input_order_receiver" id="label_order_receiver">Receiver Name</label><span class="mustValue">*</span>
         <input id="input_order_receiver" type="text" value="${requestScope.order_receiver}" maxlength="20"/>
         <div class="br"></div>
-        <label for="input_order_phone" id="label_order_phone">手机号码</label><span class="mustValue">*</span>
+        <label for="input_order_phone" id="label_order_phone">Phone</label><span class="mustValue">*</span>
         <input id="input_order_phone" type="text" value="${requestScope.order_phone}" maxlength="11"/>
     </div>
     <div class="order_info">
-        <h2>确认订单信息</h2>
+        <h2>Confirm Order Information</h2>
         <table class="table_order_orderItem">
             <thead>
             <tr>
-                <th>书籍名称</th>
-                <th>单价</th>
-                <th>数量</th>
-                <th>小计</th>
+                <th>Product Name</th>
+                <th>Price</th>
+                <th>Count</th>
+                <th>Total</th>
             </tr>
             </thead>
             <tbody>
@@ -114,9 +114,9 @@
                     <td><span class="span_productOrderItem_price">${orderItem.productOrderItem_price}0</span></td>
                 </tr>
                 <tr class="tr_userMessage">
-                    <td><label for="input_userMessage_${i.count}">备注：</label><textarea maxlength="500"
+                    <td><label for="input_userMessage_${i.count}">Remark：</label><textarea maxlength="500"
                                                                                        id="input_userMessage_${i.count}"
-                                                                                       placeholder="选填:填写内容已和卖家协商确认"
+                                                                                       placeholder="Optional: The content has been confirmed with the seller"
                                                                                        class="input_userMessage"></textarea>
                     </td>
                     <td></td>
@@ -126,8 +126,8 @@
                 </tr>
                 <tr class="tr_orderCount">
                     <td colspan="3"></td>
-                    <td><span class="span_price_name">合计(含运费)</span><span
-                            class="span_price_value">￥${orderItem.productOrderItem_price}0</span></td>
+                    <td><span class="span_price_name">Total (including shipping):</span><span
+                            class="span_price_value">$${orderItem.productOrderItem_price}0</span></td>
                 </tr>
             </c:forEach>
             </tbody>
@@ -137,16 +137,16 @@
         <div class="order_count_div_main">
             <div class="order_count_div_content">
                 <h1 class="order_count_div_price">
-                    <span class="order-title">实付款：</span><span class="realPay-price_unit">￥</span><span
+                    <span class="order-title">Real Payment：</span><span class="realPay-price_unit">$</span><span
                         class="realPay-price">${requestScope.orderTotalPrice}0</span>
                 </h1>
                 <h1 class="order_count_div_address">
-                    <span class="order-title">寄送至：</span><span class="order-value address_province"></span><span
+                    <span class="order-title">Shipping Address：</span><span class="order-value address_province"></span><span
                         class="order-value address_city"></span><span class="order-value address_district"></span><span
                         class="order-value address_details">${requestScope.detailsAddress}</span>
                 </h1>
                 <h1 class="order_count_div_phone">
-                    <span class="order-title">收货人：</span><span
+                    <span class="order-title">Receiver：</span><span
                         class="order-value user-name">${requestScope.order_receiver}</span><span
                         class="order-value user-phone">${requestScope.order_phone}</span>
                 </h1>
@@ -190,7 +190,7 @@
                 return false;
             }
             $.ajax({
-                url: "/mall/order",
+                url: "/order",
                 type: "POST",
                 data: {
                     "addressId": addressId,
@@ -208,9 +208,9 @@
                 success: function (data) {
                     data = typeof data === "string" ? JSON.parse(data) : data;
                     if (data.success) {
-                        location.href = "/mall" + data.url;
+                        location.href = "/" + data.url;
                     } else {
-                        alert("订单创建失败，请稍后再试！");
+                        alert("Order creation failed, please try again later!");
                         location.reload(true);
                     }
                 },
@@ -218,7 +218,7 @@
 
                 },
                 error: function () {
-                    alert("订单提交出现问题，请重新提交！");
+                    alert("There was a problem submitting the order, please submit again!");
                     location.reload(true);
                 }
             });
@@ -267,7 +267,7 @@
                 orderItemMap[orderItem_id] = $(this).find(".input_userMessage").val();
             });
             $.ajax({
-                url: "/mall/order/list",
+                url: "/order/list",
                 type: "POST",
                 data: {
                     "addressId": addressId,
@@ -282,17 +282,17 @@
                 traditional: true,
                 success: function (data) {
                     if (data.success) {
-                        location.href = "/mall" + data.url;
+                        location.href = "/" + data.url;
                         return true;
                     } else {
-                        alert("订单创建失败，请稍后再试！");
+                        alert("Order creation failed, please try again later!");
                         location.reload(true);
                     }
                 },
                 beforeSend: function () {
                 },
                 error: function () {
-                    alert("订单创建失败，请稍后再试！");
+                    alert("Order creation failed, please try again later!");
                     location.reload(true);
                 }
             });
@@ -301,10 +301,10 @@
     <div class="order_info_last">
         <c:choose>
             <c:when test="${requestScope.orderItemList[0].productOrderItem_id != null}">
-                <a href="javascript:void(0)" title="提交订单" class="go-btn" onclick="payList()">提交订单</a>
+                <a href="javascript:void(0)" title="Place Order" class="go-btn" onclick="payList()">Place Order</a>
             </c:when>
             <c:otherwise>
-                <a href="javascript:void(0)" title="提交订单" class="go-btn" onclick="payOne()">提交订单</a>
+                <a href="javascript:void(0)" title="Place Order" class="go-btn" onclick="payOne()">Place Order</a>
             </c:otherwise>
         </c:choose>
     </div>

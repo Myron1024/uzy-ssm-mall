@@ -2,7 +2,7 @@ $(function () {
     //搜索框验证
     $('form').submit(function () {
         if ($(this).find("input[name='product_name']").val() === "") {
-            alert("请输入关键字！");
+            alert("Please input keyword！");
             return false;
         }
     });
@@ -47,7 +47,7 @@ $(function () {
         var price = $(this).parents("tr").find(".orderItem_product_price").text();
         price = parseFloat(price.substring(1));
         var price_sum = parseFloat(price * parseInt(number));
-        $(this).parents("tr").find(".orderItem_product_realPrice").text("￥" + price_sum.toFixed(1));
+        $(this).parents("tr").find(".orderItem_product_realPrice").text("$" + price_sum.toFixed(1));
         sumPrice();
     });
 });
@@ -79,7 +79,7 @@ function up(obj) {
         price = parseFloat(price.substring(1));
         var price_sum = parseFloat(price * value);
         number.val(value);
-        obj.parents("tr").find(".orderItem_product_realPrice").text("￥" + price_sum.toFixed(1));
+        obj.parents("tr").find(".orderItem_product_realPrice").text("$" + price_sum.toFixed(1));
         if (value === 1) {
             obj.addClass("no_minus");
         }
@@ -108,7 +108,7 @@ function down(obj) {
         var price = obj.parents("tr").find(".orderItem_product_price").text();
         price = parseFloat(price.substring(1));
         var price_sum = parseFloat(price * value);
-        obj.parents("tr").find(".orderItem_product_realPrice").text("￥" + price_sum.toFixed(1));
+        obj.parents("tr").find(".orderItem_product_realPrice").text("$" + price_sum.toFixed(1));
         number.val(value);
         sumPrice();
     }
@@ -142,7 +142,7 @@ function create(obj) {
         orderItemMap[key] = $(this).find(".item_amount").children("input").val();
     });
     $.ajax({
-        url: "/mall/order/orderItem",
+        url: "/order/orderItem",
         type: "PUT",
         data: JSON.stringify(orderItemMap),
         traditional: true,
@@ -150,18 +150,18 @@ function create(obj) {
             debugger
             data = typeof data === "string" ? JSON.parse(data) : data;
             if (data.success) {
-                location.href = "/mall/order/create/byCart?order_item_list=" + data.orderItemIDArray;
+                location.href = "/order/create/byCart?order_item_list=" + data.orderItemIDArray;
                 return true;
             } else {
                 alert("购物车商品结算异常，请稍候再试！");
-                location.href = "/mall/order/cart";
+                location.href = "/order/cart";
             }
         },
         beforeSend: function () {
         },
         error: function () {
             alert("购物车商品结算异常，请稍候再试！");
-            location.href = "/mall/order/cart";
+            location.href = "/order/cart";
         }
     });
 }

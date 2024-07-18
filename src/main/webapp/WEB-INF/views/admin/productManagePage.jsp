@@ -95,6 +95,7 @@
             $.ajax({
                 url: url,
                 type: "get",
+                dataType: "json",
                 data: dataObject,
                 traditional: true,
                 success: function (data) {
@@ -113,18 +114,18 @@
                             switch (data.productList[i].product_isEnabled) {
                                 case 0:
                                     isEnabledClass = "td_success";
-                                    isEnabledTitle = "产品正常销售中";
-                                    isEnabled = "销售中";
+                                    isEnabledTitle = "The product is on sale normally";
+                                    isEnabled = "Sale";
                                     break;
                                 case 2:
                                     isEnabledClass = "td_warn";
-                                    isEnabledTitle = "产品显示在主页促销中";
-                                    isEnabled = "促销中";
+                                    isEnabledTitle = "Products displayed in home page promotions";
+                                    isEnabled = "On Sale";
                                     break;
                                 default:
                                     isEnabledClass = "td_error";
-                                    isEnabledTitle = "产品缺货或违规停售中";
-                                    isEnabled = "停售中";
+                                    isEnabledTitle = "The product is out of stock or has been suspended due to violation of regulations";
+                                    isEnabled = "Discontinued";
                                     break;
                             }
                             var product_price = data.productList[i].product_price.toFixed(1);
@@ -134,7 +135,7 @@
                             var product_title = data.productList[i].product_title;
                             var product_create_date = data.productList[i].product_create_date;
                             //显示产品数据
-                            tbody.append("<tr><td><input type='checkbox' class='cbx_select' value='"+product_id+"' id='cbx_product_select_" + product_id + "'><label for='cbx_product_select_" + product_id + "'></label></td><td title='"+product_name+"'>" + product_name + "</td><td title='"+product_title+"'>" + product_title + "</td><td title='"+product_price+"'>" + product_price + "</td><td title='"+product_sale_price+"'>" + product_sale_price + "</td><td title='"+product_create_date+"'>" + product_create_date + "</td><td><span class='" + isEnabledClass + "' title='"+isEnabledTitle+"'>"+ isEnabled + "</span></td><td><span class='td_special' title='查看产品详情'><a href='javascript:void(0);' onclick='getChildPage(this)'>详情</a></span></td><td hidden><span class='product_id'>" + product_id + "</span></td></tr>");
+                            tbody.append("<tr><td><input type='checkbox' class='cbx_select' value='"+product_id+"' id='cbx_product_select_" + product_id + "'><label for='cbx_product_select_" + product_id + "'></label></td><td title='"+product_name+"'>" + product_name + "</td><td title='"+product_title+"'>" + product_title + "</td><td title='"+product_price+"'>" + product_price + "</td><td title='"+product_sale_price+"'>" + product_sale_price + "</td><td title='"+product_create_date+"'>" + product_create_date + "</td><td><span class='" + isEnabledClass + "' title='"+isEnabledTitle+"'>"+ isEnabled + "</span></td><td><span class='td_special' title='Product Detail'><a href='javascript:void(0);' onclick='getChildPage(this)'>Detail</a></span></td><td hidden><span class='product_id'>" + product_id + "</span></td></tr>");
                         }
                         //绑定事件
                         tbody.children("tr").click(function () {
@@ -165,16 +166,16 @@
             var url;
             var title;
             if(obj === null){
-                title = "添加产品";
+                title = "Add Product";
                 url = "product/new";
             } else {
-                title = "产品详情";
+                title = "Product Detail";
                 url = "product/"+$(obj).parents("tr").find(".product_id").text();
             }
 
             //设置样式
             $("#div_home_title").children("span").text(title);
-            document.title = "柚子云购 - "+title;
+            document.title = "ELITE - "+title;
             //ajax请求页面
             ajaxUtil.getPage(url,null,true);
         }
@@ -200,10 +201,11 @@
                     }, 1500);
                 });
             }else{
-                if(window.confirm("确认删除？")){
+                if(window.confirm("Are you sure to delete?")){
                     $.ajax({
                         url:"admin/product/delete/"+arr,
                         type:"post",
+                        dataType: "json",
                         date:{"productList":arr},
                         traditional: true,
                         success:function (data) {
@@ -286,37 +288,37 @@
 <body>
 <div class="frm_div text_info">
     <div class="frm_group">
-        <label class="frm_label" id="lbl_product_name" for="input_product_name">产品名称</label>
+        <label class="frm_label" id="lbl_product_name" for="input_product_name">Product Name</label>
         <input class="frm_input" id="input_product_name" type="text" maxlength="50"/>
-        <label class="frm_label" id="lbl_product_category_id" for="select_product_category">产品类型</label>
+        <label class="frm_label" id="lbl_product_category_id" for="select_product_category">Product Category</label>
         <select class="selectpicker" id="select_product_category" data-size="8">
-            <option value="0">全部</option>
+            <option value="0">All</option>
             <c:forEach items="${requestScope.categoryList}" var="category">
                 <option value="${category.category_id}">${category.category_name}</option>
             </c:forEach>
         </select>
-        <input class="frm_btn" id="btn_product_submit" type="button" value="查询"/>
-        <input class="frm_btn frm_clear" id="btn_clear" type="button" value="重置"/>
+        <input class="frm_btn" id="btn_product_submit" type="button" value="Search"/>
+        <input class="frm_btn frm_clear" id="btn_clear" type="button" value="Reset"/>
     </div>
     <div class="frm_group">
-        <label class="frm_label" id="lbl_product_isEnabled" for="checkbox_product_isEnabled_true">产品状态</label>
+        <label class="frm_label" id="lbl_product_isEnabled" for="checkbox_product_isEnabled_true">Product Status</label>
         <input id="checkbox_product_isEnabled_true" name="checkbox_product_isEnabled" type="checkbox" value="0" checked>
-        <label class="frm_label" id="lbl_product_isEnabled_true" for="checkbox_product_isEnabled_true">销售中</label>
+        <label class="frm_label" id="lbl_product_isEnabled_true" for="checkbox_product_isEnabled_true">Sale</label>
         <input id="checkbox_product_isEnabled_false" name="checkbox_product_isEnabled" type="checkbox" value="1" checked>
-        <label class="frm_label" id="lbl_product_isEnabled_false" for="checkbox_product_isEnabled_false">停售中</label>
+        <label class="frm_label" id="lbl_product_isEnabled_false" for="checkbox_product_isEnabled_false">Discontinued</label>
         <input id="checkbox_product_isEnabled_special" name="checkbox_product_isEnabled" type="checkbox" value="2" checked>
-        <label class="frm_label" id="lbl_product_isEnabled_special" for="checkbox_product_isEnabled_special">促销中</label>
+        <label class="frm_label" id="lbl_product_isEnabled_special" for="checkbox_product_isEnabled_special">On Sale</label>
 
-        <label class="frm_label"  id="lbl_product_sale_price" for="input_product_sale_price">金额</label>
-        <input class="frm_input frm_num"  id="input_product_sale_price" type="text" placeholder="最低价" maxlength="10">
+        <label class="frm_label"  id="lbl_product_sale_price" for="input_product_sale_price">Amount</label>
+        <input class="frm_input frm_num"  id="input_product_sale_price" type="text" placeholder="Lowest Price" maxlength="10">
         <span id="text_cut">—</span>
-        <input class="frm_input frm_num"  id="input_product_price" type="text" placeholder="最高价" maxlength="10">
+        <input class="frm_input frm_num"  id="input_product_price" type="text" placeholder="Highest Price" maxlength="10">
         <span class="frm_error_msg" id="text_product_msg"></span>
     </div>
     <div class="frm_group_last">
-        <input class="frm_btn frm_add" id="btn_product_add" type="button" value="添加一件产品" onclick="getChildPage(null)"/>
-        <input class="frm_btn frm_refresh" id="btn_product_refresh" type="button" value="刷新产品列表"/>
-        <input class="frm_btn frm_danger" id="btn_product_delete" type="button" value="删除选中产品" onclick="deleteproduct()"/>
+        <input class="frm_btn frm_add" id="btn_product_add" type="button" value="Add Product" onclick="getChildPage(null)"/>
+        <input class="frm_btn frm_refresh" id="btn_product_refresh" type="button" value="Refresh Product List"/>
+        <input class="frm_btn frm_danger" id="btn_product_delete" type="button" value="Delete Selected Products" onclick="deleteproduct()"/>
         <span class="frm_error_msg" id="text_tools_msg"></span>
     </div>
 </div>
@@ -327,10 +329,10 @@
             <path d="M932.538427 958.228017c-6.565533 0-13.129019-2.508123-18.132986-7.52437L606.670661 642.206504c-9.989515-10.014074-9.969049-26.231431 0.045025-36.220946s26.230408-9.969049 36.220946 0.045025l307.73478 308.497143c9.989515 10.014074 9.969049 26.231431-0.045025 36.220946C945.627537 955.735244 939.081447 958.228017 932.538427 958.228017z" p-id="2524" fill="#FF7874">
             </path>
         </svg>
-    <span class="data_count_title">查看合计</span>
-    <span>产品总数:</span>
+    <span class="data_count_title">Total</span>
+    <span>Product Count:</span>
     <span class="data_count_value" id="product_count_data">${requestScope.productCount}</span>
-    <span class="data_count_unit">件</span>
+    <span class="data_count_unit">pieces</span>
 </div>
 <div class="table_normal_div">
     <table class="table_normal" id="table_product_list">
@@ -338,37 +340,37 @@
         <tr>
             <th><input type="checkbox" class="cbx_select" id="cbx_select_all"><label for="cbx_select_all"></label></th>
             <th class="data_info" data-sort="asc" data-name="product_name">
-                <span>产品名称</span>
+                <span>Product Name</span>
                 <span class="orderByDesc"></span>
                 <span class="orderByAsc orderBySelect"></span>
             </th>
             <th class="data_info" data-sort="asc" data-name="product_title">
-                <span>产品标题</span>
+                <span>Product Title</span>
                 <span class="orderByDesc"></span>
                 <span class="orderByAsc orderBySelect"></span>
             </th>
             <th class="data_info" data-sort="asc" data-name="product_price">
-                <span>原价</span>
+                <span>Original Price</span>
                 <span class="orderByDesc"></span>
                 <span class="orderByAsc orderBySelect"></span>
             </th>
             <th class="data_info" data-sort="asc" data-name="product_sale_price">
-                <span>促销价</span>
+                <span>Sale price</span>
                 <span class="orderByDesc"></span>
                 <span class="orderByAsc orderBySelect"></span>
             </th>
             <th class="data_info" data-sort="asc" data-name="product_create_date">
-                <span>创建时间</span>
+                <span>Created Time</span>
                 <span class="orderByDesc"></span>
                 <span class="orderByAsc orderBySelect"></span>
             </th>
             <th class="data_info" data-sort="asc" data-name="product_isEnabled">
-                <span>上架状态</span>
+                <span>Status</span>
                 <span class="orderByDesc"></span>
                 <span class="orderByAsc orderBySelect"></span>
             </th>
-            <th>操作</th>
-            <th hidden>产品ID</th>
+            <th>Actions</th>
+            <th hidden>Product ID</th>
         </tr>
         </thead>
         <tbody id="tbodyId">
@@ -382,12 +384,12 @@
                 <td title="${product.product_create_date}">${product.product_create_date}</td>
                 <td>
                     <c:choose>
-                        <c:when test="${product.product_isEnabled==0}"><span class="td_success" title="产品正常销售中">销售中</span></c:when>
-                        <c:when test="${product.product_isEnabled==2}"><span class="td_warn" title="产品显示在主页促销中">促销中</span></c:when>
-                        <c:otherwise><span class="td_error" title="产品缺货或违规停售中">停售中</span></c:otherwise>
+                        <c:when test="${product.product_isEnabled==0}"><span class="td_success" title="The product is on sale normally">Sale</span></c:when>
+                        <c:when test="${product.product_isEnabled==2}"><span class="td_warn" title="Products displayed in home page promotions">On Sale</span></c:when>
+                        <c:otherwise><span class="td_error" title="The product is out of stock or has been suspended due to violation of regulations">Discontinued</span></c:otherwise>
                     </c:choose>
                 </td>
-                <td><span class="td_special" title="查看产品详情"><a href="javascript:void(0)" onclick="getChildPage(this)">详情</a></span></td>
+                <td><span class="td_special" title="View product details"><a href="javascript:void(0)" onclick="getChildPage(this)">Detail</a></span></td>
                 <td hidden><span class="product_id">${product.product_id}</span></td>
             </tr>
         </c:forEach>
@@ -397,10 +399,10 @@
     <div class="loader"></div>
 </div>
 <div class="msg">
-    <span>删除成功</span>
+    <span>Delete Succeed</span>
 </div>
 <div class="msg1">
-    <span>无效删除</span>
+    <span>Invalid Parameter</span>
 </div>
 </body>
 </html>

@@ -21,7 +21,7 @@ $(function () {
         } else {
             $(".pwdLogin").css("display", "block");
             $(".qrcodeLogin").css("display", "none");
-            messageSpan.text("扫码登录更安全");
+            // messageSpan.text("扫码登录更安全");
             $(this).removeClass("loginSwitch_two").addClass("loginSwitch");
         }
     });
@@ -29,7 +29,7 @@ $(function () {
         var messageSpan = $(".loginMessageMain").children("span");
         $(".pwdLogin").css("display", "block");
         $(".qrcodeLogin").css("display", "none");
-        messageSpan.text("扫码登录更安全");
+        // messageSpan.text("扫码登录更安全");
         $("#loginSwitch").removeClass("loginSwitch_two").addClass("loginSwitch");
     });
     //登录验证
@@ -37,7 +37,7 @@ $(function () {
         var yn = true;
         $(this).find(":text,:password").each(function () {
             if ($.trim($(this).val()) === "") {
-                styleUtil.errorShow($("#error_message_p"), "请输入用户名和密码！");
+                styleUtil.errorShow($("#error_message_p"), "Please input the username and password！");
                 yn = false;
                 return yn;
             }
@@ -49,19 +49,19 @@ $(function () {
                 data: {"username": $.trim($("#name").val()), "password": $.trim($("#password").val())},
                 dataType: "json",
                 success: function (data) {
-                    $(".loginButton").val("登 录");
+                    $(".loginButton").val("Log in");
                     if (data.success) {
-                        location.href = "/mall";
+                        location.href = "/";
                     } else {
-                        styleUtil.errorShow($("#error_message_p"), "用户名和密码错误！");
+                        styleUtil.errorShow($("#error_message_p"), "Username/password incorrect！");
                     }
                 },
                 error: function (data) {
-                    $(".loginButton").val("登 录");
-                    styleUtil.errorShow($("#error_message_p"), "服务器异常，请刷新页面再试！");
+                    $(".loginButton").val("Log in");
+                    styleUtil.errorShow($("#error_message_p"), "Server error, please try again！");
                 },
                 beforeSend: function () {
-                    $(".loginButton").val("正在登录...");
+                    $(".loginButton").val("Login...");
                 }
             });
         }

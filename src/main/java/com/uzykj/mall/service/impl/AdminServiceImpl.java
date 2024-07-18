@@ -53,3 +53,5 @@ public class AdminServiceImpl implements AdminService {
         return adminMapper.selectTotal(admin_name);
     }
 }
+
+

@@ -221,7 +221,7 @@ public class AdminProductController {
 
     //更新产品信息-ajax
     @ResponseBody
-    @PutMapping("/product/{product_id}")
+    @PostMapping("/product/{product_id}")
     public String updateProduct(@RequestParam String product_name/* 产品名称 */,
                                 @RequestParam String product_title/* 产品标题 */,
                                 @RequestParam Integer product_category_id/* 产品类型ID */,
@@ -438,7 +438,7 @@ public class AdminProductController {
 
     //按条件查询产品-ajax
     @ResponseBody
-    @GetMapping("/product/{index}/{count}")
+    @GetMapping(value = "/product/{index}/{count}", produces = "application/json;charset=UTF-8")
     public String getProductBySearch(@RequestParam(required = false) String product_name/* 产品名称 */,
                                      @RequestParam(required = false) Integer category_id/* 产品类型ID */,
                                      @RequestParam(required = false) Double product_sale_price/* 产品最低价 */,
@@ -571,7 +571,7 @@ public class AdminProductController {
                     log.info("文件本地上传路径：" + fileAddr);
 
                     file.transferTo(new File(fileAddr));
-                    String fileUrl = localFileUrl + fileName;
+                    String fileUrl = localFileUrl + localFilePath + ImageTypeEnum.product + fileName;
 
                     object.put("success", true);
                     object.put("fileUrl", fileUrl);

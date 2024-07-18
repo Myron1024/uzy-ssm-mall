@@ -19,6 +19,10 @@ public class ProductOrder implements Serializable{
 	private Date productOrder_pay_date;
 	private Date productOrder_delivery_date;
 	private Date productOrder_confirm_date;
+	/**
+	 * 订单状态
+	 * 0 待付款， 1 买家已付款，等待卖家发货  2 卖家已发货，等待买家确认  3 交易成功  4 交易关闭
+	 */
 	private Byte productOrder_status;
 	private User productOrder_user;
 	private List<ProductOrderItem> productOrderItemList;

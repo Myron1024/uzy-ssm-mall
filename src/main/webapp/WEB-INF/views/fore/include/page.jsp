@@ -8,7 +8,7 @@
 <div id="pageDiv">
     <ul>
         <li data-name="firstPage" <c:if test="${!requestScope.pageUtil.isHasPrev()}">class="disabled" </c:if>>
-            <a href="javascript:void(0)" onclick="getPage(0)" aria-label="首页"><span
+            <a href="javascript:void(0)" onclick="getPage(0)" aria-label="Home"><span
                     aria-hidden="true">&laquo;</span></a>
         </li>
         <li data-name="prevPage" <c:if test="${!requestScope.pageUtil.isHasPrev()}">class="disabled" </c:if>>

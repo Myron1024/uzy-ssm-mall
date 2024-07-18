@@ -38,6 +38,7 @@
             $.ajax({
                 url: url,
                 type: "get",
+                dataType: "json",
                 data: dataObject,
                 success: function (data) {
                     //清空原有数据
@@ -52,7 +53,7 @@
                             var category_id = data.categoryList[i].category_id;
                             var category_name = data.categoryList[i].category_name;
                             //显示分类数据
-                            tbody.append("<tr><td><input type='checkbox' class='cbx_select' value='"+category_id+"' id='cbx_category_select_" + category_id + "'><label for='cbx_category_select_" + category_id + "'></label></td><td title='" + category_name + "'>" + category_name + "</td><td><span class='td_special' title='查看分类详情'><a href='javascript:void(0)' onclick='getChildPage(this)'>详情</a></span></td><td hidden class='category_id'>" + category_id + "</td></tr>");
+                            tbody.append("<tr><td><input type='checkbox' class='cbx_select' value='"+category_id+"' id='cbx_category_select_" + category_id + "'><label for='cbx_category_select_" + category_id + "'></label></td><td title='" + category_name + "'>" + category_name + "</td><td><span class='td_special' title='Detail'><a href='javascript:void(0)' onclick='getChildPage(this)'>Detail</a></span></td><td hidden class='category_id'>" + category_id + "</td></tr>");
                         }
                         //绑定事件
                         tbody.children("tr").click(function () {
@@ -83,16 +84,16 @@
             var url;
             var title;
             if (obj === null) {
-                title = "添加分类";
+                title = "Add Category";
                 url = "category/new";
             } else {
-                title = "分类详情";
+                title = "Detail";
                 url = "category/" + $(obj).parents("tr").find(".category_id").text();
             }
 
             //设置样式
             $("#div_home_title").children("span").text(title);
-            document.title = "柚子云购 - " + title;
+            document.title = "ELITE - " + title;
             //ajax请求页面
             ajaxUtil.getPage(url, null, true);
         }
@@ -118,14 +119,16 @@
                     }, 1500);
                 });
             } else {
-                if (window.confirm("确认删除？")) {
+                if (window.confirm("Are you sure to delete?")) {
                     $.ajax({
                         url: "admin/category/delete/" + arr,
                         type: "get",
+                        dataType: "json",
                         date: {"array": arr},
                         traditional: true,
                         success: function (data) {
                             if (data.success) {
+                                $("#btn_category_refresh").click();
                                 $(".msg").stop(true, true).animate({
                                     opacity: 1
                                 }, 550, function () {
@@ -188,15 +191,15 @@
 <body>
 <div class="frm_div text_info">
     <div class="frm_group">
-        <label class="frm_label" id="lbl_category_name" for="input_category_name">分类名称</label>
+        <label class="frm_label" id="lbl_category_name" for="input_category_name">Category Name</label>
         <input class="frm_input" id="input_category_name" type="text" maxlength="50"/>
-        <input class="frm_btn" id="btn_category_submit" type="button" value="查询"/>
-        <input class="frm_btn frm_clear" id="btn_clear" type="button" value="重置"/>
+        <input class="frm_btn" id="btn_category_submit" type="button" value="Search"/>
+        <input class="frm_btn frm_clear" id="btn_clear" type="button" value="Reset"/>
     </div>
     <div class="frm_group_last">
-        <input class="frm_btn frm_add" id="btn_category_add" type="button" value="添加一个分类" onclick="getChildPage(null)"/>
-        <input class="frm_btn frm_refresh" id="btn_category_refresh" type="button" value="刷新分类列表"/>
-        <input class="frm_btn frm_danger" id="btn_product_delete" type="button" value="删除选中分类" onclick="deleteCategory()"/>
+        <input class="frm_btn frm_add" id="btn_category_add" type="button" value="Add Category" onclick="getChildPage(null)"/>
+        <input class="frm_btn frm_refresh" id="btn_category_refresh" type="button" value="Refresh Category List"/>
+        <input class="frm_btn frm_danger" id="btn_product_delete" type="button" value="Delete Selected Category" onclick="deleteCategory()"/>
     </div>
 </div>
 <div class="data_count_div text_info">
@@ -209,8 +212,8 @@
               p-id="2524" fill="#FF7874">
         </path>
     </svg>
-    <span class="data_count_title">查看合计</span>
-    <span>分类总数:</span>
+    <span class="data_count_title">Total</span>
+    <span>Category Total:</span>
     <span class="data_count_value" id="category_count_data">${requestScope.categoryCount}</span>
     <span class="data_count_unit">个</span>
 </div>
@@ -219,9 +222,9 @@
         <thead class="text_info">
         <tr>
             <th><input type="checkbox" class="cbx_select" id="cbx_select_all"><label for="cbx_select_all"></label></th>
-            <th>分类名称</th>
-            <th>操作</th>
-            <th hidden class="category_id">分类ID</th>
+            <th>Category Name</th>
+            <th>Actions</th>
+            <th hidden class="category_id">Category ID</th>
         </tr>
         </thead>
         <tbody id="tbodyId">
@@ -229,8 +232,8 @@
             <tr>
                 <td><input type="checkbox" class="cbx_select" value="${category.category_id}" id="cbx_category_select_${category.category_id}"><label for="cbx_category_select_${category.category_id}"></label></td>
                 <td title="${category.category_name}">${category.category_name}</td>
-                <td><span class="td_special" title="查看分类详情"><a href="javascript:void(0)"
-                                                               onclick="getChildPage(this)">详情</a></span></td>
+                <td><span class="td_special" title="Detail"><a href="javascript:void(0)"
+                                                               onclick="getChildPage(this)">Detail</a></span></td>
                 <td hidden><span class="category_id">${category.category_id}</span></td>
             </tr>
         </c:forEach>
@@ -240,10 +243,10 @@
     <div class="loader"></div>
 </div>
 <div class="msg">
-    <span>删除成功</span>
+    <span>Delete Succeed</span>
 </div>
 <div class="msg1">
-    <span>无效删除</span>
+    <span>Invalid Parameter</span>
 </div>
 </body>
 </html>

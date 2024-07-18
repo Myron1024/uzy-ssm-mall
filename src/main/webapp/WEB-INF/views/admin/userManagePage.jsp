@@ -76,6 +76,7 @@
             $.ajax({
                 url: url,
                 type: "get",
+                dataType: "json",
                 data: dataObject,
                 traditional: true,
                 success: function (data) {
@@ -90,17 +91,17 @@
                         for (var i = 0; i < data.userList.length; i++) {
                             var gender;
                             if (data.userList[i].user_gender === 0) {
-                                gender = "男";
+                                gender = "Male";
                             } else {
-                                gender = "女";
+                                gender = "Female";
                             }
                             var user_id = data.userList[i].user_id;
                             var user_name = data.userList[i].user_name;
                             var user_nickname = data.userList[i].user_nickname;
-                            var user_realname = data.userList[i].user_realname;
+                            var user_realname = data.userList[i].user_realname || "";
                             var user_birthday = data.userList[i].user_birthday;
                             //显示用户数据
-                            tbody.append("<tr><td><input type='checkbox' class='cbx_select' id='cbx_user_select_" + user_id + "'><label for='cbx_user_select_" + user_id + "'></label></td><td title='" + user_name + "'>" + user_name + "</td><td title='" + user_nickname + "'>" + user_nickname + "</td><td title='" + user_realname + "'>" + user_realname + "</td><td title='" + user_birthday + "'>" + user_birthday + "</td><td title='" + gender + "'>" + gender + "</td><td><span class='td_special' title='查看用户详情'><a href='javascript:void(0);' onclick='getChildPage(this)'>详情</a></span></td><td hidden  class='user_id'>" + user_id + "</td></tr>");
+                            tbody.append("<tr><td><input type='checkbox' class='cbx_select' id='cbx_user_select_" + user_id + "'><label for='cbx_user_select_" + user_id + "'></label></td><td title='" + user_name + "'>" + user_name + "</td><td title='" + user_nickname + "'>" + user_nickname + "</td><td title='" + user_realname + "'>" + user_realname + "</td><td title='" + user_birthday + "'>" + user_birthday + "</td><td title='" + gender + "'>" + gender + "</td><td><span class='td_special' title='User Detail'><a href='javascript:void(0);' onclick='getChildPage(this)'>Detail</a></span></td><td hidden  class='user_id'>" + user_id + "</td></tr>");
                         }
                         //绑定事件
                         tbody.children("tr").click(function () {
@@ -129,8 +130,8 @@
         //获取用户子界面
         function getChildPage(obj) {
             //设置样式
-            $("#div_home_title").children("span").text("用户详情");
-            document.title = "柚子云购 - 用户详情";
+            $("#div_home_title").children("span").text("User Detail");
+            document.title = "ELITE - User Detail";
             //ajax请求页面
             ajaxUtil.getPage("user/" + $(obj).parents("tr").find(".user_id").text(), null, true);
         }
@@ -156,10 +157,11 @@
                     }, 1500);
                 });
             }else{
-                if(window.confirm("确认删除？")){
+                if(window.confirm("Are you sure to delete?")){
                     $.ajax({
                         url:"admin/user/delete/"+arr,
                         type:"get",
+                        dataType: "json",
                         date:{"productList":arr},
                         traditional: true,
                         success:function (data) {
@@ -230,22 +232,22 @@
 <body>
 <div class="frm_div text_info">
     <div class="frm_group">
-        <label class="frm_label" id="lbl_user_name" for="input_user_name">用户名/昵称</label>
+        <label class="frm_label" id="lbl_user_name" for="input_user_name">Username/Nickname</label>
         <input class="frm_input" id="input_user_name" type="text" maxlength="50"/>
-        <input class="frm_btn" id="btn_user_submit" type="button" value="查询"/>
-        <input class="frm_btn frm_clear" id="btn_clear" type="button" value="重置"/>
+        <input class="frm_btn" id="btn_user_submit" type="button" value="Search"/>
+        <input class="frm_btn frm_clear" id="btn_clear" type="button" value="Reset"/>
     </div>
     <div class="frm_group">
-        <label class="frm_label" id="lbl_user_gender" for="checkbox_user_gender_man">用户性别</label>
+        <label class="frm_label" id="lbl_user_gender" for="checkbox_user_gender_man">Gender</label>
         <input class="frm_radio radio_gender" id="checkbox_user_gender_man" name="checkbox_user_gender" type="checkbox" value="0" checked>
-        <label class="frm_label" id="lbl_user_gender_man" for="checkbox_user_gender_man">男</label>
+        <label class="frm_label" id="lbl_user_gender_man" for="checkbox_user_gender_man">Male</label>
         <input class="frm_radio radio_gender" id="checkbox_user_gender_woman" name="checkbox_user_gender" type="checkbox" value="1" checked>
-        <label class="frm_label" id="lbl_user_gender_woman" for="checkbox_user_gender_woman">女</label>
+        <label class="frm_label" id="lbl_user_gender_woman" for="checkbox_user_gender_woman">Female</label>
     </div>
     <div class="frm_group_last">
         <%--<input class="frm_btn frm_add" id="btn_category_add" type="button" value="添加一个用户" onclick=""/>--%>
-        <input class="frm_btn frm_refresh" id="btn_user_refresh" type="button" value="刷新用户列表"/>
-        <input class="frm_btn frm_danger" id="btn_product_delete" type="button" value="删除选中用户" onclick="deleteUser()"/>
+        <input class="frm_btn frm_refresh" id="btn_user_refresh" type="button" value="Refresh User List"/>
+        <input class="frm_btn frm_danger" id="btn_product_delete" type="button" value="Delete selected user" onclick="deleteUser()"/>
     </div>
 </div>
 <div class="data_count_div text_info">
@@ -258,8 +260,8 @@
               p-id="2524" fill="#FF7874">
         </path>
     </svg>
-    <span class="data_count_title">查看合计</span>
-    <span>用户总数:</span>
+    <span class="data_count_title">Total</span>
+    <span>User Count:</span>
     <span class="data_count_value" id="user_count_data">${requestScope.userCount}</span>
     <span class="data_count_unit">位</span>
 </div>
@@ -269,32 +271,32 @@
         <tr>
             <th><input type="checkbox" class="cbx_select" id="cbx_select_all"><label for="cbx_select_all"></label></th>
             <th class="data_info" data-sort="asc" data-name="user_name">
-                <span>用户名</span>
+                <span>Username</span>
                 <span class="orderByDesc"></span>
                 <span class="orderByAsc orderBySelect"></span>
             </th>
             <th class="data_info" data-sort="asc" data-name="user_nickname">
-                <span>昵称</span>
+                <span>Nickname</span>
                 <span class="orderByDesc"></span>
                 <span class="orderByAsc orderBySelect"></span>
             </th>
             <th class="data_info" data-sort="asc" data-name="user_realname">
-                <span>姓名</span>
+                <span>Real name</span>
                 <span class="orderByDesc"></span>
                 <span class="orderByAsc orderBySelect"></span>
             </th>
             <th class="data_info" data-sort="asc" data-name="user_birthday">
-                <span>出生日期</span>
+                <span>Birthday</span>
                 <span class="orderByDesc"></span>
                 <span class="orderByAsc orderBySelect"></span>
             </th>
             <th class="data_info" data-sort="asc" data-name="user_gender">
-                <span>性别</span>
+                <span>Gender</span>
                 <span class="orderByDesc"></span>
                 <span class="orderByAsc orderBySelect"></span>
             </th>
-            <th>操作</th>
-            <th hidden>用户ID</th>
+            <th>Actions</th>
+            <th hidden>User ID</th>
         </tr>
         </thead>
         <tbody id="tbodyId">
@@ -307,12 +309,12 @@
                 <td title="${user.user_birthday}">${user.user_birthday}</td>
                 <td>
                     <c:choose>
-                        <c:when test="${user.user_gender==0}">男</c:when>
-                        <c:otherwise>女</c:otherwise>
+                        <c:when test="${user.user_gender==0}">Male</c:when>
+                        <c:otherwise>Female</c:otherwise>
                     </c:choose>
                 </td>
-                <td><span class="td_special" title="查看用户详情"><a href='javascript:void(0)'
-                                                               onclick='getChildPage(this)'>详情</a></span></td>
+                <td><span class="td_special" title="User Detail"><a href='javascript:void(0)'
+                                                               onclick='getChildPage(this)'>Detail</a></span></td>
                 <td hidden class="user_id">${user.user_id}</td>
             </tr>
         </c:forEach>
@@ -322,10 +324,10 @@
     <div class="loader"></div>
 </div>
 <div class="msg">
-    <span>删除成功</span>
+    <span>Delete Succeed</span>
 </div>
 <div class="msg1">
-    <span>无效删除</span>
+    <span>Invalid Parameter</span>
 </div>
 </body>
 </html>

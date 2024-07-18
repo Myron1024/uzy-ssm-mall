@@ -23,19 +23,19 @@
                     var admin_confirmPassword = $.trim($("#input_admin_confirmPassword").val());
                     //校验数据合法性
                     if (admin_password === "") {
-                        styleUtil.errorShow($("#text_password_details_msg"), "请输入原密码");
+                        styleUtil.errorShow($("#text_password_details_msg"), "Please enter the original password");
                         return;
                     }
                     if (admin_newPassword === "") {
-                        styleUtil.errorShow($("#text_newPassword_details_msg"), "请输入新密码");
+                        styleUtil.errorShow($("#text_newPassword_details_msg"), "Please enter a new password");
                         return;
                     }
                     if (admin_confirmPassword === "") {
-                        styleUtil.errorShow($("#text_confirmPassword_details_msg"), "请重复输入一遍新密码");
+                        styleUtil.errorShow($("#text_confirmPassword_details_msg"), "Please re-enter your new password");
                         return;
                     }
                     if (admin_password === admin_newPassword) {
-                        styleUtil.errorShow($("#text_newPassword_details_msg"), "新密码和旧密码不能相同");
+                        styleUtil.errorShow($("#text_newPassword_details_msg"), "The new password and the old password cannot be the same");
                         return;
                     }
                     if (admin_newPassword !== admin_confirmPassword) {
@@ -74,7 +74,7 @@
                 data: dataList,
                 traditional: true,
                 success: function (data) {
-                    $("#btn_admin_save").attr("disabled", false).val("保存");
+                    $("#btn_admin_save").attr("disabled", false).val("Save");
                     if (data.success) {
                         $("#btn-ok,#btn-close").unbind("click").click(function () {
                             $('#modalDiv').modal("hide");
@@ -127,7 +127,7 @@
             formData.append("file", file);
             //上传图片
             $.ajax({
-                url: "/mall/admin/uploadAdminHeadImage",
+                url: "/admin/uploadAdminHeadImage",
                 type: "post",
                 data: formData,
                 contentType: false,
@@ -178,18 +178,18 @@
 <div class="details_div_first">
     <input type="hidden" value="${requestScope.admin.admin_id}" id="details_admin_id"/>
     <div class="frm_div">
-        <label class="frm_label text_info" id="lbl_admin_id">管理员编号</label>
+        <label class="frm_label text_info" id="lbl_admin_id">Administrator Number</label>
         <span class="details_value" id="span_admin_id">${requestScope.admin.admin_id}</span>
     </div>
     <div class="frm_div">
-        <label class="frm_label text_info" id="lbl_admin_name">账户名</label>
+        <label class="frm_label text_info" id="lbl_admin_name">Account Name</label>
         <span class="details_value" id="span_admin_name">${requestScope.admin.admin_name}</span>
     </div>
 </div>
 <div class="details_div">
-    <span class="details_title text_info">基本信息</span>
+    <span class="details_title text_info">Basic Information</span>
     <div class="frm_div">
-        <label class="frm_label text_info" id="lbl_admin_profile_picture">管理员头像</label>
+        <label class="frm_label text_info" id="lbl_admin_profile_picture">Administrator Avatar</label>
         <img
                 src="${pageContext.request.contextPath}/static/images/upload/adminProfilePicture/${requestScope.admin.admin_profile_picture_src}"
                 id="admin_profile_picture" width="84px" height="84px"
@@ -197,42 +197,42 @@
         <input type="file" onchange="uploadImage(this)" accept="image/*" id="uploadImage">
     </div>
     <div class="frm_div">
-        <label class="frm_label text_info" id="lbl_admin_nickname" for="input_admin_nickname">管理员昵称</label>
+        <label class="frm_label text_info" id="lbl_admin_nickname" for="input_admin_nickname">Administrator Nickname</label>
         <input class="frm_input" id="input_admin_nickname" type="text" maxlength="50"
                value="${requestScope.admin.admin_nickname}"/>
     </div>
 </div>
 <div class="details_div">
-    <span class="details_title text_info">管理员操作</span>
+    <span class="details_title text_info">Administrator Actions</span>
     <div class="frm_div">
         <span class="details_value td_wait"><a id="span_admin_modifyPwd" href="javascript:void(0)"
-                                               onclick="modifyPwd()">修改密码</a></span>
+                                               onclick="modifyPwd()">Change Password</a></span>
     </div>
     <div class="frm_div">
         <span class="details_value td_wait"><a id="span_admin_logout"
-                                               href="${pageContext.request.contextPath}/admin/login/logout">退出当前帐号</a></span>
+                                               href="${pageContext.request.contextPath}/admin/login/logout">Log Out</a></span>
     </div>
 </div>
 <div class="details_div details_div_last modifyPwd">
-    <span class="details_title text_info">修改密码</span>
+    <span class="details_title text_info">Change Password</span>
     <div class="frm_div">
-        <label class="frm_label text_info" id="lbl_admin_password" for="input_admin_password">当前密码</label>
+        <label class="frm_label text_info" id="lbl_admin_password" for="input_admin_password">Current Password</label>
         <input class="frm_input" id="input_admin_password" type="password" maxlength="50"/>
         <span class="frm_error_msg" id="text_password_details_msg"></span>
     </div>
     <div class="frm_div">
-        <label class="frm_label text_info" id="lbl_admin_newPassword" for="input_admin_newPassword">新密码</label>
+        <label class="frm_label text_info" id="lbl_admin_newPassword" for="input_admin_newPassword">New Password</label>
         <input class="frm_input" id="input_admin_newPassword" type="password" maxlength="50"/>
         <span class="frm_error_msg" id="text_newPassword_details_msg"></span>
     </div>
     <div class="frm_div">
-        <label class="frm_label text_info" id="lbl_admin_confirmPassword" for="input_admin_confirmPassword">确认密码</label>
+        <label class="frm_label text_info" id="lbl_admin_confirmPassword" for="input_admin_confirmPassword">Confirm New Password</label>
         <input class="frm_input" id="input_admin_confirmPassword" type="password" maxlength="50"/>
         <span class="frm_error_msg" id="text_confirmPassword_details_msg"></span>
     </div>
 </div>
 <div class="details_tools_div">
-    <input class="frm_btn" id="btn_admin_save" type="button" value="保存"/>
+    <input class="frm_btn" id="btn_admin_save" type="button" value="Save"/>
 </div>
 
 <%-- 模态框 --%>
@@ -241,12 +241,12 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h4 class="modal-title" id="myModalLabel">提示</h4>
+                <h4 class="modal-title" id="myModalLabel">Tip</h4>
             </div>
-            <div class="modal-body">保存成功</div>
+            <div class="modal-body">Save Succeed</div>
             <div class="modal-footer">
-                <button type="submit" class="btn btn-primary" id="btn-ok">确定</button>
-                <button type="button" class="btn btn-default" data-dismiss="modal" id="btn-close">关闭</button>
+                <button type="submit" class="btn btn-primary" id="btn-ok">OK</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal" id="btn-close">Close</button>
             </div>
         </div>
         <%-- /.modal-content %--%>

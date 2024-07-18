@@ -71,8 +71,8 @@
 </style>
 <div class="J_details">
     <div class="J_details_list">
-        <p class="J_details_list_header">产品名称：<span>${requestScope.product.product_name}</span></p>
-        <p class="J_details_list_title">产品参数：</p>
+        <p class="J_details_list_header">Product Name：<span>${requestScope.product.product_name}</span></p>
+        <p class="J_details_list_title">Product Parameters：</p>
         <ul class="J_details_list_body">
             <c:forEach items="${requestScope.propertyList}" var="property">
                 <c:if test="${property.propertyValueList[0].propertyValue_value != null}">

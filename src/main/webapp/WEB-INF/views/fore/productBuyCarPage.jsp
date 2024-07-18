@@ -3,7 +3,7 @@
 <head>
     <script src="${pageContext.request.contextPath}/static/js/fore/fore_productBuyCar.js"></script>
     <link href="${pageContext.request.contextPath}/static/css/fore/fore_productBuyCarPage.css" rel="stylesheet"/>
-    <title>购物车</title>
+    <title>Cart</title>
     <script>
         $(function () {
             $('#btn-ok').click(function () {
@@ -16,14 +16,14 @@
                         if (data.success !== true) {
                             alert("购物车商品删除异常，请稍候再试！");
                         }
-                        location.href = "/mall/order/cart";
+                        location.href = "/order/cart";
                     },
                     beforeSend: function () {
 
                     },
                     error: function () {
                         alert("购物车产品删除异常，请稍后再试！");
-                        location.href = "/mall/order/cart";
+                        location.href = "/order/cart";
                     }
                 });
             });
@@ -43,16 +43,16 @@
     <%@ include file="include/navigator.jsp" %>
     <div class="header">
         <div id="mallLogo">
-            <a href="${pageContext.request.contextPath}"><img
+            <a href="${pageContext.request.contextPath}/"><img
                     src="${pageContext.request.contextPath}/static/images/fore/WebsiteImage/logo-small2.png"><span
-                    class="span_tmallBuyCar">购物车</span></a>
+                    class="span_tmallBuyCar">Cart</span></a>
         </div>
         <div class="shopSearchHeader">
             <form action="${pageContext.request.contextPath}/product" method="get">
                 <div class="shopSearchInput">
-                    <input type="text" class="searchInput" name="product_name" placeholder="搜索 "
+                    <input type="text" class="searchInput" name="product_name" placeholder="Search "
                            value="${requestScope.searchValue}" maxlength="50">
-                    <input type="submit" value="搜 索" class="searchBtn">
+                    <input type="submit" value="Search" class="searchBtn">
                 </div>
             </form>
             <ul>
@@ -71,7 +71,7 @@
             <div id="crumbs">
             </div>
             <div id="empty">
-                <h2>您的购物车还是空的，赶紧行动吧！您可以：</h2>
+                <h2>Your shopping cart is still empty, take action now! You can:</h2>
                 <ul>
                     <li>看看<a href="${pageContext.request.contextPath}/order">已买到的宝贝</a></li>
                 </ul>
@@ -82,7 +82,7 @@
                 <ul id="J_CartSwitch">
                     <li>
                         <a href="${pageContext.request.contextPath}/order/cart" class="J_MakePoint">
-                            <em>全部商品</em>
+                            <em>All product</em>
                         </a>
                     </li>
                 </ul>
@@ -94,12 +94,12 @@
                 <thead>
                 <tr>
                     <th class="selectAll_th"><input type="checkbox" class="cbx_select" id="cbx_select_all"><label
-                            for="cbx_select_all">全选</label></th>
-                    <th width="474px" class="productInfo_th"><span>商品信息</span></th>
-                    <th width="120px"><span>单价</span></th>
-                    <th width="120px"><span>数量</span></th>
-                    <th width="120px"><span>金额</span></th>
-                    <th width="84px"><span>操作</span></th>
+                            for="cbx_select_all">Select</label></th>
+                    <th width="474px" class="productInfo_th"><span>Product information</span></th>
+                    <th width="120px"><span>Price</span></th>
+                    <th width="120px"><span>Count</span></th>
+                    <th width="120px"><span>Amount</span></th>
+                    <th width="84px"><span>Actions</span></th>
                     <th hidden>ID</th>
                 </tr>
                 </thead>
@@ -118,7 +118,7 @@
                                 href="${pageContext.request.contextPath}/product/${orderItem.productOrderItem_product.product_id}">${orderItem.productOrderItem_product.product_name}</a></span>
                         </td>
                         <td><span
-                                class="orderItem_product_price">￥${orderItem.productOrderItem_price/orderItem.productOrderItem_number}</span>
+                                class="orderItem_product_price">$${orderItem.productOrderItem_price/orderItem.productOrderItem_number}</span>
                         </td>
                         <td>
                             <div class="item_amount">
@@ -129,10 +129,10 @@
                             </div>
                         </td>
                         <td>
-                            <span class="orderItem_product_realPrice">￥${orderItem.productOrderItem_price}</span>
+                            <span class="orderItem_product_realPrice">$${orderItem.productOrderItem_price}</span>
                         </td>
                         <td><a href="javascript:void(0)" onclick="removeItem('${orderItem.productOrderItem_id}')"
-                               class="remove_order">删除</a></td>
+                               class="remove_order">Delete</a></td>
                         <td>
                             <input type="hidden" class="input_orderItem" name="${orderItem.productOrderItem_id}"/>
                         </td>
@@ -144,31 +144,31 @@
                 <div id="J_SelectAll2">
                     <div class="cart_checkbox">
                         <input class="J_checkboxShop" id="J_SelectAllCbx2" type="checkbox" value="true"/>
-                        <label for="J_SelectAllCbx2" title="勾选购物车内所有商品"></label>
+                        <label for="J_SelectAllCbx2" title="Select ALL"></label>
                     </div>
-                    <span class="span_selectAll">&nbsp;全选</span>
+                    <span class="span_selectAll">&nbsp;Select</span>
                 </div>
                 <div class="operations">
-                    <a href="javascript:void(0)" onclick="remove()">删除</a>
+                    <a href="javascript:void(0)" onclick="remove()">Delete</a>
                 </div>
                 <div class="float-bar-right">
                     <div id="J_ShowSelectedItems">
-                        <span class="txt">已选商品</span>
+                        <span class="txt">Selected</span>
                         <em id="J_SelectedItemsCount">0</em>
-                        <span class="txt">件</span>
+                        <span class="txt">items</span>
                     </div>
                     <div class="price_sum">
-                        <span class="txt">合计（不含运费）:</span>
+                        <span class="txt">Total:</span>
                         <strong class="price">
                             <em id="J_Total">
-                                <span class="total_symbol">&nbsp;  ￥</span>
+                                <span class="total_symbol">&nbsp;  $</span>
                                 <span class="total_value"> 0.00</span>
                             </em>
                         </strong>
                     </div>
                     <div class="btn_area">
                         <a href="javascript:void(0)" id="J_Go" onclick="create(this)">
-                            <span>结&nbsp;算</span>
+                            <span>Check Out</span>
                         </a>
                     </div>
                 </div>
@@ -182,12 +182,12 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h4 class="modal-title" id="myModalLabel">提示</h4>
+                <h4 class="modal-title" id="myModalLabel">Tip</h4>
             </div>
-            <div class="modal-body">您确定要取消该宝贝吗？</div>
+            <div class="modal-body">Are you sure you want to cancel this item?</div>
             <div class="modal-footer">
-                <button type="submit" class="btn btn-primary" id="btn-ok">确定</button>
-                <button type="button" class="btn btn-default" data-dismiss="modal" id="btn-close">关闭</button>
+                <button type="submit" class="btn btn-primary" id="btn-ok">Yes</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal" id="btn-close">Close</button>
                 <input type="hidden" id="order_id_hidden">
             </div>
         </div>

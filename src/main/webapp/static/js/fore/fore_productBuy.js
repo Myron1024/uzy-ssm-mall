@@ -7,7 +7,7 @@ $(function () {
     $('#select_order_address_province').change(function () {
         $.ajax({
             type: "GET",
-            url: "/mall/address/" + $(this).val(),
+            url: "/address/" + $(this).val(),
             data: null,
             dataType: "json",
             success: function (data) {
@@ -45,7 +45,7 @@ $(function () {
     $("#select_order_address_city").change(function () {
         $.ajax({
             type: "GET",
-            url: "/mall/address/" + $(this).val(),
+            url: "/address/" + $(this).val(),
             data: null,
             dataType: "json",
             success: function (data) {
@@ -91,7 +91,7 @@ $(function () {
     //搜索框验证
     $('form').submit(function () {
         if ($(this).find("input[name='product_name']").val() === "") {
-            alert("请输入关键字！");
+            alert("Please input keyword！");
             return false;
         }
     });

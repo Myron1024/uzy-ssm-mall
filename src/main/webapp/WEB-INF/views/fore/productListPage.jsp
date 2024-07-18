@@ -10,15 +10,15 @@
     <%@ include file="include/navigator.jsp" %>
     <div class="header">
         <div id="mallLogo">
-            <a href="${pageContext.request.contextPath}"><img
+            <a href="${pageContext.request.contextPath}/"><img
                     src="${pageContext.request.contextPath}/static/images/fore/WebsiteImage/logo-small2.png"></a>
         </div>
         <div class="shopSearchHeader">
             <form action="${pageContext.request.contextPath}/product" method="get">
                 <div class="shopSearchInput">
-                    <input type="text" class="searchInput" name="product_name" placeholder="搜索 "
+                    <input type="text" class="searchInput" name="product_name" placeholder="Search "
                            value="${requestScope.searchValue}" maxlength="50">
-                    <input type="submit" value="搜 索" class="searchBtn">
+                    <input type="submit" value="Search" class="searchBtn">
                 </div>
             </form>
             <ul>
@@ -40,22 +40,22 @@
                     <c:otherwise>data-type = ${requestScope.searchType}</c:otherwise></c:choose>>
                     <li data-name="product_name"
                         <c:if test="${requestScope.orderBy =='product_name' || requestScope.orderBy ==null}">class="orderBySelect"</c:if>>
-                        <span>综合</span>
+                        <span>Relevance</span>
                         <span class="orderByAsc"></span>
                     </li>
                     <li data-name="product_create_date"
                         <c:if test="${requestScope.orderBy =='product_create_date'}">class="orderBySelect"</c:if>>
-                        <span>新品</span>
+                        <span>New</span>
                         <span class="orderByAsc"></span>
                     </li>
                     <li data-name="product_sale_count"
                         <c:if test="${requestScope.orderBy =='product_sale_count'}">class="orderBySelect"</c:if>>
-                        <span>销量</span>
+                        <span>Sales</span>
                         <span class="orderByAsc"></span>
                     </li>
                     <li data-name="product_sale_price"
                         <c:if test="${requestScope.orderBy =='product_sale_price'}">class="orderBySelect"</c:if>>
-                        <span style="position: relative;left: 3px">价格</span>
+                        <span style="position: relative;left: 3px">Price</span>
                         <span class="orderByDesc <c:if test="${requestScope.isDesc == true}">orderBySelect</c:if>"
                               style="bottom: 5px; left: 6px;"></span>
                         <span class="orderByAsc <c:if test="${requestScope.isDesc == false}">orderBySelect</c:if>"
@@ -78,14 +78,14 @@
                                 </c:forEach>
                             </ul>
                             <p class="context_product_price"><span>¥</span>${product.product_sale_price}</p>
-                            <p class="context_product_name"><a href="/mall/product/${product.product_id}"
+                            <p class="context_product_name"><a href="/product/${product.product_id}"
                                                                target="_blank">${product.product_name}</a></p>
                             <%-- <p class="context_product_shop"><span>贤趣${product.product_category.category_name}旗舰店</span> --%>
                             </p>
                             <p class="context_product_status">
-                                <span class="status_left">总成交<em><c:choose><c:when
-                                        test="${product.product_sale_count != null}">${product.product_sale_count}</c:when><c:otherwise>0</c:otherwise></c:choose>笔</em></span>
-                                <span class="status_middle">评价<em>${product.product_review_count}</em></span>
+                                <span class="status_left"><em><c:choose><c:when
+                                        test="${product.product_sale_count != null}">${product.product_sale_count}</c:when><c:otherwise>0</c:otherwise></c:choose> Sold</em></span>
+                                <span class="status_middle">Comments<em>${product.product_review_count}</em></span>
                                 <span class="status_right">
                                    <%-- <img src="${pageContext.request.contextPath}/static/images/fore/WebsiteImage/T11lggFoXcXXc1v.nr-93-93.png"/>--%>
                                 </span>

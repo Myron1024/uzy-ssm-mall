@@ -29,7 +29,7 @@
             border-bottom: 1px solid #e5e5e5;
         }*/
     </style>
-    <title>柚子云购 -- 登录</title>
+    <title>ELITE -- Login</title>
 </head>
 <body>
 <%@ include file="include/navigator.jsp" %>
@@ -41,34 +41,34 @@
 <div class="content">
     <div class="contentMain"></div>
     <div class="loginDiv">
-        <div class="loginSwitch" id="loginSwitch"></div>
+<%--        <div class="loginSwitch" id="loginSwitch"></div>--%>
         <div class="loginMessage">
-            <div class="loginMessageMain">
-                <div class="poptip-arrow"><em></em><span></span></div>
-                <img src="${pageContext.request.contextPath}/static/images/fore/WebsiteImage/scan-safe.png"/><span>扫码登录更安全</span>
-            </div>
+<%--            <div class="loginMessageMain">--%>
+<%--                <div class="poptip-arrow"><em></em><span></span></div>--%>
+<%--                <img src="${pageContext.request.contextPath}/static/images/fore/WebsiteImage/scan-safe.png"/><span>扫码登录更安全</span>--%>
+<%--            </div>--%>
         </div>
         <div class="pwdLogin">
-            <span class="loginTitle">密码登录</span>
+            <span class="loginTitle">Login</span>
             <form method="post" class="loginForm">
                 <div class="loginInputDiv">
                     <label for="name" class="loginLabel"><img
                             src="${pageContext.request.contextPath}/static/images/fore/WebsiteImage/2018-04-27_235518.png"
-                            width="38px" height="39px" title="会员名"/></label>
-                    <input type="text" name="name" id="name" class="loginInput" placeholder="会员名/邮箱/手机号">
+                            width="38px" height="39px" title="Username"/></label>
+                    <input type="text" name="name" id="name" class="loginInput" placeholder="Username">
                 </div>
                 <div class="loginInputDiv">
                     <label for="password" class="loginLabel"><img
                             src="${pageContext.request.contextPath}/static/images/fore/WebsiteImage/2018-04-27_235533.png"
-                            width="38px" height="39px" title="登录密码"/></label>
-                    <input type="password" name="password" id="password" class="loginInput">
+                            width="38px" height="39px" title="Password"/></label>
+                    <input type="password" name="password" id="password" class="loginInput" placeholder="Password">
                 </div>
-                <input type="submit" class="loginButton" value="登 录">
+                <input type="submit" class="loginButton" value="Log In">
             </form>
             <div class="loginLinks">
-                <a href="#">忘记密码</a>
-                <a href="#">忘记会员名</a>
-                <a href="${pageContext.request.contextPath}/register">免费注册</a>
+<%--                <a href="#">Forgot password</a>--%>
+<%--                <a href="#">忘记会员名</a>--%>
+                <a href="${pageContext.request.contextPath}/register">Register</a>
             </div>
             <div class="error_message">
                 <p id="error_message_p"></p>
@@ -88,8 +88,8 @@
                         href="https://uzykj.com/m">手机</a>扫一扫登录</p>
             </div>
             <div class="loginLinks">
-                <a href="JavaScript:void(0)" id="pwdLogin">密码登录</a>
-                <a href="#">免费注册</a>
+                <a href="JavaScript:void(0)" id="pwdLogin">Login</a>
+                <a href="#">Register</a>
             </div>
         </div>
     </div>

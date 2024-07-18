@@ -21,7 +21,7 @@
                     $("#wait_point_4").addClass("wait_point_select").children(".wait_point_text").addClass('td_special');
                     break;
                 default:
-                    $("#wait_point_1").children(".wait_point_text").addClass('td_special').text("交易关闭").prev("span").text('×');
+                    $("#wait_point_1").children(".wait_point_text").addClass('td_special').text("Order Closed").prev("span").text('×');
                     $("#wait_point_1").addClass("wait_point_select");
             }
 
@@ -49,12 +49,12 @@
                                     ajaxUtil.getPage("order/" + data.order_id, null, true);
                                 }, 170);
                             });
-                            $(".modal-body").text("发货成功！");
+                            $(".modal-body").text("Delivery Success!");
                             $('#modalDiv').modal();
                         }
                     },
                     beforeSend: function () {
-                        $("#btn_order_save").attr("disabled", true).val("发货中...");
+                        $("#btn_order_save").attr("disabled", true).val("Shipping...");
                     },
                     error: function () {
 
@@ -66,8 +66,8 @@
         //获取产品子界面
         function getChildPage(obj) {
             //设置样式
-            $("#div_home_title").children("span").text("产品详情");
-            document.title = "柚子云购 - 产品详情";
+            $("#div_home_title").children("span").text("Product Detail");
+            document.title = "ELITE - Product Detail";
             //ajax请求页面
             ajaxUtil.getPage("product/" + $(obj).parents("tr").find(".product_id").text(), null, true);
         }
@@ -75,8 +75,8 @@
         //获取用户子界面
         function getUserPage(id) {
             //设置样式
-            $("#div_home_title").children("span").text("用户详情");
-            document.title = "柚子云购 - 用户详情";
+            $("#div_home_title").children("span").text("User Detail");
+            document.title = "ELITE - User Detail";
             //ajax请求页面
             ajaxUtil.getPage("user/" + id, null, true);
         }
@@ -132,7 +132,7 @@
 <div class="details_div_first">
     <input type="hidden" value="${requestScope.order.productOrder_id}" id="details_order_id"/>
     <div class="frm_div">
-        <label class="frm_label text_info" id="lbl_order_id">订单号</label>
+        <label class="frm_label text_info" id="lbl_order_id">Order ID</label>
         <span class="details_value" id="span_order_id">${requestScope.order.productOrder_code}</span>
     </div>
     <div class="frm_div">
@@ -142,63 +142,63 @@
     </div>
 </div>
 <div class="details_div">
-    <span class="details_title text_info">基本信息</span>
+    <span class="details_title text_info">Basic Information</span>
     <div class="frm_div">
-        <label class="frm_label text_info" id="lbl_order_receiver">收货人姓名</label>
+        <label class="frm_label text_info" id="lbl_order_receiver">Receiver</label>
         <span class="details_value" id="span_order_receiver">${requestScope.order.productOrder_receiver}</span>
     </div>
     <div class="frm_div">
-        <label class="frm_label text_info" id="lbl_order_address">收货地址</label>
+        <label class="frm_label text_info" id="lbl_order_address">Address</label>
         <span class="details_value details_value_noRows"
               id="span_order_address">${requestScope.order.productOrder_detail_address}</span>
     </div>
     <div class="frm_div">
-        <label class="frm_label text_info" id="lbl_product_title">邮政编码</label>
+        <label class="frm_label text_info" id="lbl_product_title">Postal Code</label>
         <span class="details_value" id="span_order_post">${requestScope.order.productOrder_post}</span>
-        <label class="frm_label text_info" id="lbl_order_mobile">联系电话</label>
+        <label class="frm_label text_info" id="lbl_order_mobile">Mobile</label>
         <span class="details_value" id="span_order_mobile">${requestScope.order.productOrder_mobile}</span>
     </div>
 </div>
 <div class="details_div details_status_spacial">
-    <span class="details_title text_info">订单状态</span>
+    <span class="details_title text_info">Order Status</span>
     <div id="wait">
         <div class="wait_point" id="wait_point_1" style="top:-0.7em;left: 0;">
             <span>1</span>
-            <div class="wait_point_text">等待买家付款</div>
+            <div class="wait_point_text">To Pay</div>
         </div>
         <div class="wait_point" id="wait_point_2" style="top:-0.7em;left: 33%;">
             <span>2</span>
-            <div class="wait_point_text">等待卖家发货</div>
+            <div class="wait_point_text">To Ship</div>
         </div>
         <div class="wait_point" id="wait_point_3" style="top:-0.7em;left: 66%;">
             <span>3</span>
-            <div class="wait_point_text">等待买家确认</div>
+            <div class="wait_point_text">To Confirm</div>
         </div>
         <div class="wait_point" id="wait_point_4" style="top:-0.7em;left: 100%;">
             <span>4</span>
-            <div class="wait_point_text">订单交易完成</div>
+            <div class="wait_point_text">Completed</div>
         </div>
     </div>
 </div>
 <div class="details_div">
-    <span class="details_title text_info">订单项信息</span>
+    <span class="details_title text_info">Order Information</span>
     <table class="table_normal" id="table_orderItem_list">
         <thead class="text_info">
         <tr>
-            <th>产品图片</th>
-            <th>产品名称</th>
-            <th>单价</th>
-            <th>数量</th>
-            <th>价格</th>
-            <th>备注</th>
-            <th>操作</th>
-            <th hidden class="product_id">产品ID</th>
+            <th>Product Image</th>
+            <th>Product Name</th>
+            <th>Unit Price</th>
+            <th>Amount</th>
+            <th>Total Price</th>
+            <th>Description</th>
+            <th>Actions</th>
+            <th hidden class="product_id">Product ID</th>
         </tr>
         </thead>
         <tbody>
         <c:forEach items="${requestScope.order.productOrderItemList}" var="item" varStatus="i">
             <tr>
-                <td title="产品图片"><img
+                <td title="Product Image"><img
                         src="${pageContext.request.contextPath}/static/images/item/productSinglePicture/${item.productOrderItem_product.singleProductImageList[0].productImage_src}"
                         id="pic_single_${item.productOrderItem_product.singleProductImageList[0].productImage_id}"
                         width="42px" height="42px"
@@ -208,8 +208,8 @@
                 <td title="${item.productOrderItem_number}">${item.productOrderItem_number}</td>
                 <td title="${item.productOrderItem_price}">${item.productOrderItem_price}</td>
                 <td title="${item.productOrderItem_userMessage}">${item.productOrderItem_userMessage}</td>
-                <td><span class="td_special" title="查看产品详情"><a href="javascript:void(0)"
-                                                               onclick="getChildPage(this)">详情</a></span></td>
+                <td><span class="td_special" title="Product Detail"><a href="javascript:void(0)"
+                                                               onclick="getChildPage(this)">Detail</a></span></td>
                 <td hidden><span class="product_id">${item.productOrderItem_product.product_id}</span></td>
             </tr>
         </c:forEach>
@@ -218,21 +218,21 @@
 </div>
 <c:if test="${requestScope.order.productOrder_status != 0 && requestScope.order.productOrder_status != 4}">
     <div class="details_div details_div_last">
-        <span class="details_title text_info">流程时间</span>
+        <span class="details_title text_info">Process Time</span>
         <div class="frm_div">
-            <label class="frm_label text_info" id="lbl_order_pay_date">支付日期</label>
+            <label class="frm_label text_info" id="lbl_order_pay_date">Payment Date</label>
             <span class="details_value details_value_noRows"
                   id="span_order_pay_date">${requestScope.order.productOrder_pay_date}</span>
         </div>
         <c:if test="${requestScope.order.productOrder_status != 1}">
             <div class="frm_div">
-                <label class="frm_label text_info" id="lbl_order_delivery_date">发货日期</label>
+                <label class="frm_label text_info" id="lbl_order_delivery_date">Shipping Date</label>
                 <span class="details_value details_value_noRows"
                       id="span_order_delivery_date">${requestScope.order.productOrder_delivery_date}</span>
             </div>
             <c:if test="${requestScope.order.productOrder_status == 3}">
                 <div class="frm_div">
-                    <label class="frm_label text_info" id="lbl_order_confirm_date">确认日期</label>
+                    <label class="frm_label text_info" id="lbl_order_confirm_date">Confirm Date</label>
                     <span class="details_value details_value_noRows"
                           id="span_order_confirm_date">${requestScope.order.productOrder_confirm_date}</span>
                 </div>
@@ -242,9 +242,9 @@
 </c:if>
 <div class="details_tools_div">
     <c:if test="${requestScope.order.productOrder_status==1}">
-        <input class="frm_btn" id="btn_order_save" type="button" value="发货"/>
+        <input class="frm_btn" id="btn_order_save" type="button" value="Ship"/>
     </c:if>
-    <input class="frm_btn frm_clear" id="btn_order_cancel" type="button" value="取消"/>
+    <input class="frm_btn frm_clear" id="btn_order_cancel" type="button" value="Cancel"/>
 </div>
 
 <%-- 模态框 --%>
@@ -253,17 +253,15 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h4 class="modal-title" id="myModalLabel">提示</h4>
+                <h4 class="modal-title" id="myModalLabel">Tip</h4>
             </div>
-            <div class="modal-body">您确定要删除该订单吗？</div>
+            <div class="modal-body">Are you sure you want to delete this order?</div>
             <div class="modal-footer">
-                <button type="submit" class="btn btn-primary" id="btn-ok">确定</button>
-                <button type="button" class="btn btn-default" data-dismiss="modal" id="btn-close">关闭</button>
+                <button type="submit" class="btn btn-primary" id="btn-ok">Yes</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal" id="btn-close">No</button>
             </div>
         </div>
-        <%-- /.modal-content --%>
     </div>
-    <%-- /.modal --%>
 </div>
 <div class="loader"></div>
 </body>

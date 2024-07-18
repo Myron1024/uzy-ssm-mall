@@ -24,7 +24,7 @@
                     //校验数据合法性
                     var yn = true;
                     if(product_isEnabled === undefined){
-                        styleUtil.errorShow($("#text_productState_details_msg"),"请选择产品状态！");
+                        styleUtil.errorShow($("#text_productState_details_msg"),"Please select product status！");
                         yn = false;
                     }
                     if(product_name === ""){
@@ -97,7 +97,7 @@
                     if($(this).val() === product_isEnabled){
                         $(this).prop("checked",true);
                         if($(this).val() === "1"){
-                            $("#text_productState_details_msg").text("提示：产品停售时无法进行交易").attr("title","提示：产品停售时无法进行交易").css("left",0).css("opacity","1");
+                            $("#text_productState_details_msg").text("Tip：No transactions can be made when the product is discontinued").attr("title","提示：产品停售时无法进行交易").css("left",0).css("opacity","1");
                         }
                         return false;
                     }
@@ -132,7 +132,7 @@
                     //校验数据合法性
                     var yn = true;
                     if (product_isEnabled === undefined) {
-                        styleUtil.errorShow($("#text_productState_details_msg"), "请选择产品状态！");
+                        styleUtil.errorShow($("#text_productState_details_msg"), "Please select product status！");
                         yn = false;
                     }
                     if (product_name === "") {
@@ -210,7 +210,7 @@
                         "productSingleImageList": productSingleImageList,
                         "productDetailsImageList": productDetailsImageList
                     };
-                    doAction(dataList, "admin/product/" + product_id, "PUT");
+                    doAction(dataList, "admin/product/" + product_id, "POST");
                 });
             }
 
@@ -231,7 +231,7 @@
                 } else {
                     $("#btn-ok").unbind("click").click(function () {
                         $.ajax({
-                            url: "/mall/admin/productImage/" + productImage_id,
+                            url: "/admin/productImage/" + productImage_id,
                             type: "delete",
                             data: null,
                             success: function (data) {
@@ -242,7 +242,7 @@
                                     $('#modalDiv').modal("hide");
                                 } else {
                                     $('#modalDiv').modal("hide");
-                                    alert("图片删除异常！");
+                                    alert("An exception occurred when deleting the image!");
                                 }
                             },
                             beforeSend: function () {
@@ -254,13 +254,13 @@
                         });
                     });
                 }
-                $(".modal-body").text("您确定要删除该产品图片吗？");
+                $(".modal-body").text("Are you sure you want to delete this product image?");
                 $('#modalDiv').modal();
             });
             //改变产品状态时
             $('input:radio').click(function () {
                 if($(this).val() === "1"){
-                    styleUtil.errorShow($("#text_productState_details_msg"),"提示：产品停售时无法进行交易");
+                    styleUtil.errorShow($("#text_productState_details_msg"),"Tip：No transactions can be made when the product is discontinued");
                 } else {
                     styleUtil.errorHide($("#text_productState_details_msg"));
                 }
@@ -347,7 +347,7 @@
             formData.append("imageType", type);
             //上传图片
             $.ajax({
-                url: "/mall/admin/uploadProductImage",
+                url: "/admin/uploadProductImage",
                 type: "post",
                 data: formData,
                 contentType: false,
@@ -392,9 +392,11 @@
                 url: url,
                 type: type,
                 data: dataList,
+                dataType: "json",
                 traditional: true,
                 success: function (data) {
-                    $("#btn_product_save").attr("disabled", false).val("保存");
+                    console.log(data);
+                    $("#btn_product_save").attr("disabled", false).val("Save");
                     if (data.success) {
                         $("#btn-ok,#btn-close").unbind("click").click(function () {
                             $('#modalDiv').modal("hide");
@@ -403,15 +405,17 @@
                                 ajaxUtil.getPage("product/" + data.product_id, null, true);
                             }, 170);
                         });
-                        $(".modal-body").text("保存成功！");
+                        $(".modal-body").text("Save Succeed！");
                         $('#modalDiv').modal();
                     }
                 },
                 beforeSend: function () {
-                    $("#btn_product_save").attr("disabled", true).val("保存中...");
+                    debugger;
+                    $("#btn_product_save").attr("disabled", true).val("Saving...");
                 },
                 error: function () {
 
+                    debugger;
                 }
             });
         }
@@ -443,47 +447,47 @@
 <div class="details_div_first">
     <input type="hidden" value="${requestScope.product.product_id}" id="details_product_id"/>
     <div class="frm_div_last warn_height">
-        <label class="frm_label text_info" id="lbl_product_category_id" for="select_product_category">产品类型</label>
+        <label class="frm_label text_info" id="lbl_product_category_id" for="select_product_category">Product Category</label>
         <select class="selectpicker" id="select_product_category" data-size="8">
             <c:forEach items="${requestScope.categoryList}" var="category">
                 <option value="${category.category_id}">${category.category_name}</option>
             </c:forEach>
         </select>
-        <label class="frm_label text_info" id="lbl_product_isEnabled" for="radio_product_isEnabled_true">产品状态</label>
+        <label class="frm_label text_info" id="lbl_product_isEnabled" for="radio_product_isEnabled_true">Product Status</label>
         <input id="radio_product_isEnabled_true" name="radio_product_isEnabled" type="radio" value="0" checked>
-        <label class="frm_label text_info" id="lbl_product_isEnabled_true" for="radio_product_isEnabled_true">销售中</label>
+        <label class="frm_label text_info" id="lbl_product_isEnabled_true" for="radio_product_isEnabled_true">Sale</label>
         <input id="radio_product_isEnabled_false" name="radio_product_isEnabled" type="radio" value="1">
-        <label class="frm_label text_info" id="lbl_product_isEnabled_false" for="radio_product_isEnabled_false">停售中</label>
+        <label class="frm_label text_info" id="lbl_product_isEnabled_false" for="radio_product_isEnabled_false">Discontinued</label>
         <input id="radio_product_isEnabled_special" name="radio_product_isEnabled" type="radio" value="2">
-        <label class="frm_label text_info" id="lbl_product_isEnabled_special" for="radio_product_isEnabled_special">促销中</label>
+        <label class="frm_label text_info" id="lbl_product_isEnabled_special" for="radio_product_isEnabled_special">On Sale</label>
         <span class="frm_error_msg" id="text_productState_details_msg"></span>
     </div>
 </div>
 <div class="details_div">
-    <span class="details_title text_info">基本信息</span>
+    <span class="details_title text_info">Basic Information</span>
     <div class="frm_div">
-        <label class="frm_label text_info" id="lbl_product_id">产品编号</label>
-        <span class="details_value" id="span_product_id">系统指定</span>
-        <label class="frm_label text_info" id="lbl_product_create_date">上架日期</label>
-        <span class="details_value" id="span_product_create_date">系统指定</span>
+        <label class="frm_label text_info" id="lbl_product_id">Product ID</label>
+        <span class="details_value" id="span_product_id">System Specified</span>
+        <label class="frm_label text_info" id="lbl_product_create_date">Release Date</label>
+        <span class="details_value" id="span_product_create_date">System Specified</span>
     </div>
     <div class="frm_div">
-        <label class="frm_label text_info" id="lbl_product_name" for="input_product_name">产品名称</label>
+        <label class="frm_label text_info" id="lbl_product_name" for="input_product_name">Product Name</label>
         <input class="frm_input" id="input_product_name" type="text" maxlength="50" value="${requestScope.product.product_name}"/>
-        <label class="frm_label text_info" id="lbl_product_title" for="input_product_title">产品标题</label>
+        <label class="frm_label text_info" id="lbl_product_title" for="input_product_title">Product Title</label>
         <input class="frm_input" id="input_product_title" type="text" maxlength="50" value="${requestScope.product.product_title}"/>
     </div>
     <div class="frm_div_last">
-        <label class="frm_label text_info" id="lbl_product_price" for="input_product_price">产品原价</label>
+        <label class="frm_label text_info" id="lbl_product_price" for="input_product_price">Original Price</label>
         <input class="frm_input details_unit"  id="input_product_price" type="text" maxlength="10" value="${requestScope.product.product_price}"/>
-        <span class="details_unit text_info">元</span>
-        <label class="frm_label text_info" id="lbl_product_sale_price" for="input_product_sale_price">产品促销价</label>
+        <span class="details_unit text_info">CAD</span>
+        <label class="frm_label text_info" id="lbl_product_sale_price" for="input_product_sale_price">Promotion Price</label>
         <input class="frm_input details_unit"  id="input_product_sale_price" type="text" maxlength="10" value="${requestScope.product.product_sale_price}"/>
-        <span class="details_unit text_info">元</span>
+        <span class="details_unit text_info">CAD</span>
     </div>
 </div>
 <div class="details_div">
-    <span class="details_title text_info">概述图片</span>
+    <span class="details_title text_info">Overview Image</span>
     <ul class="details_picList" id="product_single_list">
         <c:forEach items="${requestScope.product.singleProductImageList}" var="image">
             <li><img
@@ -496,13 +500,13 @@
                 <path d="M0 512C0 229.230208 229.805588 0 512 0 794.769792 0 1024 229.805588 1024 512 1024 794.769792 794.194412 1024 512 1024 229.230208 1024 0 794.194412 0 512Z" p-id="1529" fill="#FF7874"></path>
                 <path d="M753.301333 490.666667l-219.946667 0L533.354667 270.741333c0-11.776-9.557333-21.333333-21.354667-21.333333-11.776 0-21.333333 9.536-21.333333 21.333333L490.666667 490.666667 270.72 490.666667c-11.776 0-21.333333 9.557333-21.333333 21.333333 0 11.797333 9.557333 21.354667 21.333333 21.354667L490.666667 533.354667l0 219.904c0 11.861333 9.536 21.376 21.333333 21.376 11.797333 0 21.354667-9.578667 21.354667-21.333333l0-219.946667 219.946667 0c11.754667 0 21.333333-9.557333 21.333333-21.354667C774.634667 500.224 765.077333 490.666667 753.301333 490.666667z" p-id="1530" fill="#FFFFFF"></path>
             </svg>
-            <span>点击上传</span>
+            <span>Upload</span>
             <input type="file" onchange="uploadImage(this)" accept="image/*">
         </li>
     </ul>
 </div>
 <div class="details_div">
-    <span class="details_title text_info">详情图片</span>
+    <span class="details_title text_info">Detailed Image</span>
     <ul class="details_picList" id="product_details_list">
         <c:forEach items="${requestScope.product.detailProductImageList}" var="image">
             <li><img
@@ -515,13 +519,13 @@
                 <path d="M0 512C0 229.230208 229.805588 0 512 0 794.769792 0 1024 229.805588 1024 512 1024 794.769792 794.194412 1024 512 1024 229.230208 1024 0 794.194412 0 512Z" p-id="1529" fill="#FF7874"></path>
                 <path d="M753.301333 490.666667l-219.946667 0L533.354667 270.741333c0-11.776-9.557333-21.333333-21.354667-21.333333-11.776 0-21.333333 9.536-21.333333 21.333333L490.666667 490.666667 270.72 490.666667c-11.776 0-21.333333 9.557333-21.333333 21.333333 0 11.797333 9.557333 21.354667 21.333333 21.354667L490.666667 533.354667l0 219.904c0 11.861333 9.536 21.376 21.333333 21.376 11.797333 0 21.354667-9.578667 21.354667-21.333333l0-219.946667 219.946667 0c11.754667 0 21.333333-9.557333 21.333333-21.354667C774.634667 500.224 765.077333 490.666667 753.301333 490.666667z" p-id="1530" fill="#FFFFFF"></path>
             </svg>
-            <span>点击上传</span>
+            <span>Upload</span>
             <input type="file" onchange="uploadImage(this)" accept="image/*" class="product_details_image_list">
         </li>
     </ul>
 </div>
 <div class="details_div details_div_last details_property_list" >
-    <span class="details_title text_info">属性值信息</span>
+    <span class="details_title text_info">Attribute Information</span>
     <c:forEach items="${requestScope.propertyList}" var="property" varStatus="status">
         <c:choose>
             <c:when test="${status.index % 2 == 0}">
@@ -564,8 +568,8 @@
 </div>
 
 <div class="details_tools_div">
-    <input class="frm_btn" id="btn_product_save" type="button" value="保存"/>
-    <input class="frm_btn frm_clear" id="btn_product_cancel" type="button" value="取消"/>
+    <input class="frm_btn" id="btn_product_save" type="button" value="Save"/>
+    <input class="frm_btn frm_clear" id="btn_product_cancel" type="button" value="Cancel"/>
 </div>
 
 <%-- 模态框 --%>
@@ -573,12 +577,12 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h4 class="modal-title" id="myModalLabel">提示</h4>
+                <h4 class="modal-title" id="myModalLabel">Tip</h4>
             </div>
-            <div class="modal-body">您确定要删除该产品图片吗？</div>
+            <div class="modal-body">Are you sure you want to delete this product image?</div>
             <div class="modal-footer">
-                <button type="submit" class="btn btn-primary" id="btn-ok">确定</button>
-                <button type="button" class="btn btn-default" data-dismiss="modal" id="btn-close">关闭</button>
+                <button type="submit" class="btn btn-primary" id="btn-ok">OK</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal" id="btn-close">Close</button>
             </div>
         </div>
         <%-- /.modal-content --%>

@@ -4379,7 +4379,7 @@ CREATE TABLE `productorder`  (
   `productorder_pay_date` datetime NOT NULL,
   `productorder_delivery_date` datetime NULL DEFAULT NULL,
   `productorder_confirm_date` datetime NULL DEFAULT NULL,
-  `productorder_status` tinyint(1) NOT NULL,
+  `productorder_status` tinyint(1) NOT NULL,	-- 0 待付款， 1 买家已付款，等待卖家发货  2 卖家已发货，等待买家确认  3 交易成功  4 交易关闭
   `productorder_user_id` int(10) NOT NULL,
   PRIMARY KEY (`productorder_id`) USING BTREE,
   UNIQUE INDEX `un_productorder_code`(`productorder_code`) USING BTREE,
