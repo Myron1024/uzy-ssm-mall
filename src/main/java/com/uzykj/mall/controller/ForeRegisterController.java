@@ -59,7 +59,7 @@ public class ForeRegisterController {
         if (count > 0) {
             JSONObject object = new JSONObject();
             object.put("success", false);
-            object.put("msg", "用户名已存在，请重新输入！");
+            object.put("msg", "The username already exists, please re-enter!");
             return object.toJSONString();
         }
 
