@@ -83,7 +83,18 @@ public class ForeOrderController {
                     for (ProductOrderItem productOrderItem : productOrderItemList) {
                         Integer product_id = productOrderItem.getProductOrderItem_product().getProduct_id();
                         Product product = productService.get(product_id);
-                        product.setSingleProductImageList(productImageService.getList(product_id, new PageUtil(0, 1)));
+                        List<ProductImage> list = productImageService.getList(product_id, new PageUtil(0, 1));
+                        list.forEach(x -> {
+                            if (StringUtils.isEmpty(x.getProductImage_src())) {
+                                x.setProductImage_src("/static/images/fore/WebsiteImage/noimg.jpg");
+                            } else {
+                                if (!x.getProductImage_src().startsWith("http")) {
+                                    x.setProductImage_src(localFilePath + x.getProductImage_src());
+                                }
+                            }
+                        });
+                        product.setSingleProductImageList(list);
+//                        product.setSingleProductImageList(productImageService.getList(product_id, new PageUtil(0, 1)));
                         productOrderItem.setProductOrderItem_product(product);
                         if (order.getProductOrder_status() == 3) {
                             productOrderItem.setIsReview(reviewService.getTotalByOrderItemId(productOrderItem.getProductOrderItem_id()) > 0);
@@ -123,7 +134,19 @@ public class ForeOrderController {
 
         // 获取产品的详细信息
         product.setProduct_category(categoryService.get(product.getProduct_category().getCategory_id()));
-        product.setSingleProductImageList(productImageService.getList(product_id, new PageUtil(0, 1)));
+
+        List<ProductImage> list = productImageService.getList(product_id, new PageUtil(0, 1));
+        list.forEach(x -> {
+            if (StringUtils.isEmpty(x.getProductImage_src())) {
+                x.setProductImage_src("/static/images/fore/WebsiteImage/noimg.jpg");
+            } else {
+                if (!x.getProductImage_src().startsWith("http")) {
+                    x.setProductImage_src(localFilePath + x.getProductImage_src());
+                }
+            }
+        });
+        product.setSingleProductImageList(list);
+//        product.setSingleProductImageList(productImageService.getList(product_id, new PageUtil(0, 1)));
 
         // 封装订单项对象
         ProductOrderItem productOrderItem = new ProductOrderItem();
@@ -203,7 +226,6 @@ public class ForeOrderController {
         Integer userId = (Integer) session.getAttribute("USER_ID");
         map.put("user", user);
 
-
         if (order_item_list == null || order_item_list.length == 0) {
             log.warn("用户订单项数组不存在，回到购物车页");
             return "redirect:/order/cart";
@@ -224,17 +246,28 @@ public class ForeOrderController {
                 log.warn("用户订单项与用户不匹配，回到购物车页");
                 return "redirect:/order/cart";
             }
-            if (orderItem.getProductOrderItem_order() != null) {
-                log.warn("用户订单项不属于购物车，回到购物车页");
-                return "redirect:/order/cart";
-            }
+//            if (orderItem.getProductOrderItem_order() != null) {
+//                log.warn("用户订单项不属于购物车，回到购物车页");
+//                return "redirect:/order/cart";
+//            }
         }
         // 验证通过，获取订单项的产品信息
         double orderTotalPrice = 0.0;
         for (ProductOrderItem orderItem : orderItemList) {
             Product product = productService.get(orderItem.getProductOrderItem_product().getProduct_id());
             product.setProduct_category(categoryService.get(product.getProduct_category().getCategory_id()));
-            product.setSingleProductImageList(productImageService.getList(product.getProduct_id(), new PageUtil(0, 1)));
+            List<ProductImage> list = productImageService.getList(product.getProduct_id(), new PageUtil(0, 1));
+            list.forEach(x -> {
+                if (StringUtils.isEmpty(x.getProductImage_src())) {
+                    x.setProductImage_src("/static/images/fore/WebsiteImage/noimg.jpg");
+                } else {
+                    if (!x.getProductImage_src().startsWith("http")) {
+                        x.setProductImage_src(localFilePath + x.getProductImage_src());
+                    }
+                }
+            });
+            product.setSingleProductImageList(list);
+//            product.setSingleProductImageList(productImageService.getList(product.getProduct_id(), new PageUtil(0, 1)));
             orderItem.setProductOrderItem_product(product);
             orderTotalPrice += orderItem.getProductOrderItem_price();
         }
@@ -413,7 +446,19 @@ public class ForeOrderController {
             ProductOrderItem productOrderItem = order.getProductOrderItemList().get(0);
             Integer product_id = productOrderItem.getProductOrderItem_product().getProduct_id();
             Product product = productService.get(product_id);
-            product.setSingleProductImageList(productImageService.getList(product_id, new PageUtil(0, 1)));
+
+            List<ProductImage> list = productImageService.getList(product_id, new PageUtil(0, 1));
+            list.forEach(x -> {
+                if (StringUtils.isEmpty(x.getProductImage_src())) {
+                    x.setProductImage_src("/static/images/fore/WebsiteImage/noimg.jpg");
+                } else {
+                    if (!x.getProductImage_src().startsWith("http")) {
+                        x.setProductImage_src(localFilePath + x.getProductImage_src());
+                    }
+                }
+            });
+            product.setSingleProductImageList(list);
+//            product.setSingleProductImageList(productImageService.getList(product_id, new PageUtil(0, 1)));
             productOrderItem.setProductOrderItem_product(product);
             orderTotalPrice = productOrderItem.getProductOrderItem_price();
         } else {
@@ -421,7 +466,19 @@ public class ForeOrderController {
             for (ProductOrderItem productOrderItem : order.getProductOrderItemList()) {
                 Integer product_id = productOrderItem.getProductOrderItem_product().getProduct_id();
                 Product product = productService.get(product_id);
-                product.setSingleProductImageList(productImageService.getList(product_id, new PageUtil(0, 1)));
+
+                List<ProductImage> list = productImageService.getList(product_id, new PageUtil(0, 1));
+                list.forEach(x -> {
+                    if (StringUtils.isEmpty(x.getProductImage_src())) {
+                        x.setProductImage_src("/static/images/fore/WebsiteImage/noimg.jpg");
+                    } else {
+                        if (!x.getProductImage_src().startsWith("http")) {
+                            x.setProductImage_src(localFilePath + x.getProductImage_src());
+                        }
+                    }
+                });
+                product.setSingleProductImageList(list);
+//                product.setSingleProductImageList(productImageService.getList(product_id, new PageUtil(0, 1)));
                 productOrderItem.setProductOrderItem_product(product);
                 orderTotalPrice += productOrderItem.getProductOrderItem_price();
             }
@@ -500,7 +557,18 @@ public class ForeOrderController {
             for (ProductOrderItem orderItem : orderItemList) {
                 Integer product_id = orderItem.getProductOrderItem_product().getProduct_id();
                 Product product = productService.get(product_id);
-                product.setSingleProductImageList(productImageService.getList(product_id, null));
+//                product.setSingleProductImageList(productImageService.getList(product_id, null));
+                List<ProductImage> list = productImageService.getList(product_id, null);
+                list.forEach(x -> {
+                    if (StringUtils.isEmpty(x.getProductImage_src())) {
+                        x.setProductImage_src("/static/images/fore/WebsiteImage/noimg.jpg");
+                    } else {
+                        if (!x.getProductImage_src().startsWith("http")) {
+                            x.setProductImage_src(localFilePath + x.getProductImage_src());
+                        }
+                    }
+                });
+                product.setSingleProductImageList(list);
                 product.setProduct_category(categoryService.get(product.getProduct_category().getCategory_id()));
                 orderItem.setProductOrderItem_product(product);
             }
@@ -674,10 +742,10 @@ public class ForeOrderController {
                     object.put("success", false);
                     return object.toJSONString();
                 }
-                if (productOrderItem.getProductOrderItem_order() != null) {
-                    log.warn("用户订单项不属于购物车，回到购物车页");
-                    return "redirect:/order/cart";
-                }
+//                if (productOrderItem.getProductOrderItem_order() != null) {
+//                    log.warn("用户订单项不属于购物车，回到购物车页");
+//                    return "redirect:/order/cart";
+//                }
                 Short number = Short.valueOf(orderItemString.getString(key.toString()));
                 if (number <= 0 || number > 500) {
                     log.warn("订单项产品数量不合法！");
@@ -822,12 +890,12 @@ public class ForeOrderController {
                     object.put("url", "/order/cart");
                     return object.toJSONString();
                 }
-                if (orderItem.getProductOrderItem_order() != null) {
-                    log.warn("用户订单项不属于购物车，回到购物车页");
-                    object.put("success", false);
-                    object.put("url", "/order/cart");
-                    return object.toJSONString();
-                }
+//                if (orderItem.getProductOrderItem_order() != null) {
+//                    log.warn("用户订单项不属于购物车，回到购物车页");
+//                    object.put("success", false);
+//                    object.put("url", "/order/cart");
+//                    return object.toJSONString();
+//                }
                 boolean yn = productOrderItemService.update(new ProductOrderItem().setProductOrderItem_id(Integer.valueOf(id)).setProductOrderItem_userMessage(orderItemMap.getString(id)));
                 if (!yn) {
                     throw new RuntimeException();

@@ -5,7 +5,9 @@ import com.uzykj.mall.entity.*;
 import com.uzykj.mall.service.*;
 import com.uzykj.mall.util.PageUtil;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
@@ -32,6 +34,8 @@ public class ForeReviewController {
     private ProductService productService;
     @Autowired
     private ProductImageService productImageService;
+    @Value("${storeService.local.local_file_path}")
+    private String localFilePath;
 
     //转到前台-评论添加页
     @GetMapping("/{orderItem_id}")
@@ -49,7 +53,19 @@ public class ForeReviewController {
         // 获取订单项所属产品信息和产品评论信息
         Product product = productService.get(orderItem.getProductOrderItem_product().getProduct_id());
         product.setProduct_review_count(reviewService.getTotalByProductId(product.getProduct_id()));
-        product.setSingleProductImageList(productImageService.getList(product.getProduct_id(), new PageUtil(0, 1)));
+
+        List<ProductImage> list = productImageService.getList(product.getProduct_id(), new PageUtil(0, 1));
+        list.forEach(x -> {
+            if (StringUtils.isEmpty(x.getProductImage_src())) {
+                x.setProductImage_src("/static/images/fore/WebsiteImage/noimg.jpg");
+            } else {
+                if (!x.getProductImage_src().startsWith("http")) {
+                    x.setProductImage_src(localFilePath + x.getProductImage_src());
+                }
+            }
+        });
+        product.setSingleProductImageList(list);
+//        product.setSingleProductImageList(productImageService.getList(product.getProduct_id(), new PageUtil(0, 1)));
         orderItem.setProductOrderItem_product(product);
 
         map.put("orderItem", orderItem);

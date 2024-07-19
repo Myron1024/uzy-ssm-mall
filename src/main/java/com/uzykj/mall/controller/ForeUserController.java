@@ -9,6 +9,7 @@ import com.uzykj.mall.entity.enums.ProductImageStoreEnum;
 import com.uzykj.mall.service.AddressService;
 import com.uzykj.mall.service.UserService;
 import com.uzykj.mall.util.FileUtil;
+import com.uzykj.mall.util.Md5Util;
 import com.uzykj.mall.util.qiniu.QiniuUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -128,7 +129,7 @@ public class ForeUserController {
                 .setUser_birthday(new SimpleDateFormat("yyyy-MM-dd").parse(user_birthday))
                 .setUser_address(new Address().setAddress_areaId(user_address))
                 .setUser_profile_picture_src(user_profile_picture_src)
-                .setUser_password(user_password);
+                .setUser_password(Md5Util.MD5Encode(user_password, "UTF-8"));
 
         if (userService.update(userUpdate)) {
             log.info("修改成功!跳转到用户详情页面");

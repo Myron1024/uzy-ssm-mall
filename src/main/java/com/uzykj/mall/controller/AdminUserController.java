@@ -8,7 +8,9 @@ import com.uzykj.mall.service.*;
 import com.uzykj.mall.util.OrderUtil;
 import com.uzykj.mall.util.PageUtil;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
@@ -39,6 +41,8 @@ public class AdminUserController {
     private ProductImageService productImageService;
     @Autowired
     private ProductOrderService productOrderService;
+    @Value("${storeService.local.local_file_path}")
+    private String localFilePath;
 
     //转到后台管理-用户页-ajax
     @GetMapping("/user")
@@ -103,7 +107,19 @@ public class AdminUserController {
                 Product product = productService.get(productId);
                 if (product != null) {
                     log.warn("获取产品ID为{}的第一张预览图片信息", productId);
-                    product.setSingleProductImageList(productImageService.getList(productId, new PageUtil(0, 1)));
+
+                    List<ProductImage> list = productImageService.getList(productId, new PageUtil(0, 1));
+                    list.forEach(x -> {
+                        if (StringUtils.isEmpty(x.getProductImage_src())) {
+                            x.setProductImage_src("/static/images/fore/WebsiteImage/noimg.jpg");
+                        } else {
+                            if (!x.getProductImage_src().startsWith("http")) {
+                                x.setProductImage_src(localFilePath + x.getProductImage_src());
+                            }
+                        }
+                    });
+                    product.setSingleProductImageList(list);
+//                    product.setSingleProductImageList(productImageService.getList(productId, new PageUtil(0, 1)));
                 }
                 productOrderItem.setProductOrderItem_product(product);
             }

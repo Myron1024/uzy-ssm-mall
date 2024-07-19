@@ -22,6 +22,12 @@
         </association>
     </resultMap>
 
+    <resultMap id="OrderGroupResultMap" type="OrderGroup">
+        <result property="productOrder_pay_date" column="productorder_pay_date"/>
+        <result property="productOrder_count" column="productorder_count"/>
+        <result property="productOrder_status" column="productorder_status"/>
+    </resultMap>
+
     <insert id="insertOne" parameterType="productOrder">
         INSERT productorder
         (productorder_id,productorder_code,productorder_detail_address,productorder_post,productorder_receiver,productorder_mobile,productorder_pay_date,productorder_delivery_date,productorder_confirm_date,productorder_status,productorder_address,productorder_user_id)
@@ -169,7 +175,7 @@
         </where>
     </select>
 
-    <select id="getTotalByDate" resultType="orderGroup">
+    <select id="getTotalByDate" resultMap="OrderGroupResultMap">
         SELECT
         productorder_pay_date,count(productorder_id) as productorder_count ,productorder_status from productorder
         <where>

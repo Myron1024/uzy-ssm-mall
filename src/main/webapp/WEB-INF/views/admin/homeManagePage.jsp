@@ -12,7 +12,7 @@
                 // 指定图表的配置项和数据
                 var option = {
                     title: {
-                        text: 'Order Amount'
+                        text: 'Order Count'
                     },
                     tooltip: {
                         trigger: 'axis',
@@ -24,7 +24,7 @@
                         }
                     },
                     legend: {
-                        data: ['Total Amount', 'Completed Order', 'To Confirm', 'To Ship', 'To Pay']
+                        data: ['Total Count', 'Completed Order', 'To Confirm', 'To Ship', 'To Pay']
                     },
                     grid: {
                         left: '3%',
@@ -42,7 +42,7 @@
                     },
                     series: [
                         {
-                            name: 'Total Amount',
+                            name: 'Total Count',
                             type: 'line',
                             label: {
                                 normal: {
@@ -139,7 +139,7 @@
                                 data: data.dateStr
                             },
                             series: [{
-                                name: "Total Amount",
+                                name: "Total Count",
                                 data: data.orderTotalArray
                             }, {
                                 name: "Completed Order",
@@ -168,7 +168,7 @@
                         data: jsonObject.dateStr
                     },
                     series: [{
-                        name: "Total Amount",
+                        name: "Total Count",
                         data: jsonObject.orderTotalArray
                     }, {
                         name: "Order Completed",

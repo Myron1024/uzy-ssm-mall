@@ -13,6 +13,7 @@ import com.uzykj.mall.util.OrderUtil;
 import com.uzykj.mall.util.PageUtil;
 import com.uzykj.mall.util.qiniu.QiniuUtil;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
@@ -77,6 +78,15 @@ public class AdminProductController {
         Product product = productService.get(pid);
         Integer product_id = product.getProduct_id();
         List<ProductImage> productImageList = productImageService.getList(product_id, null);
+        productImageList.forEach(x -> {
+            if (StringUtils.isEmpty(x.getProductImage_src())) {
+                x.setProductImage_src("/static/images/fore/WebsiteImage/noimg.jpg");
+            } else {
+                if (!x.getProductImage_src().startsWith("http")) {
+                    x.setProductImage_src(localFilePath + x.getProductImage_src());
+                }
+            }
+        });
 
         List<ProductImage> singleProductImageList = new ArrayList<>(5);
         List<ProductImage> detailsProductImageList = new ArrayList<>(8);

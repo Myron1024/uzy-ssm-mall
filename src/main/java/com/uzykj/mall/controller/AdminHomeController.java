@@ -116,22 +116,22 @@ public class AdminHomeController {
         for (OrderGroup orderGroup : orderGroupList) {
             int index = 0;
             for (int j = 0; j < dateStr.length; j++) {
-                if (dateStr[j].equals(orderGroup.getProductorder_pay_date())) {
+                if (dateStr[j].equals(orderGroup.getProductOrder_pay_date())) {
                     index = j;
                 }
             }
-            switch (orderGroup.getProductorder_status()) {
+            switch (orderGroup.getProductOrder_status()) {
                 case 0:
-                    orderUnpaidArray[index] = orderGroup.getProductorder_count();
+                    orderUnpaidArray[index] = orderGroup.getProductOrder_count();
                     break;
                 case 1:
-                    orderNotShippedArray[index] = orderGroup.getProductorder_count();
+                    orderNotShippedArray[index] = orderGroup.getProductOrder_count();
                     break;
                 case 2:
-                    orderUnconfirmedArray[index] = orderGroup.getProductorder_count();
+                    orderUnconfirmedArray[index] = orderGroup.getProductOrder_count();
                     break;
                 case 3:
-                    orderSuccessArray[index] = orderGroup.getProductorder_count();
+                    orderSuccessArray[index] = orderGroup.getProductOrder_count();
                     break;
             }
         }

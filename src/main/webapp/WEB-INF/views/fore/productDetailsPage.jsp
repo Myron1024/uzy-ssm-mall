@@ -204,7 +204,7 @@
                                         if (data.url != null) {
                                             location.href = "/" + data.url;
                                         } else {
-                                            alert("加入购物车失败，请稍后再试！");
+                                            alert("Failed to add to shopping cart, please try again later!");
                                         }
                                     }
                                 },
@@ -212,7 +212,7 @@
 
                                 },
                                 error: function () {
-                                    alert("加入购物车失败，请稍后再试！");
+                                    alert("Failed to add to shopping cart, please try again later!");
                                 }
                             });
                             return false;

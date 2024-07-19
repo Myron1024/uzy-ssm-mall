@@ -58,10 +58,10 @@ public class ProductOrderServiceImpl implements ProductOrderService,Serializable
         return productOrderMapper.selectByUserId(user_id, pageUtil);
     }
 
-
     @Override
     public List<OrderGroup> getTotalByDate(Date beginDate, Date endDate) {
-        return productOrderMapper.getTotalByDate(beginDate, endDate);
+        List<OrderGroup> totalByDate = productOrderMapper.getTotalByDate(beginDate, endDate);
+        return totalByDate;
     }
 
     @Override

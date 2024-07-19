@@ -242,16 +242,16 @@
                 styleUtil.specialBasicErrorShow($("#label_order_receiver"));
                 yn = false;
             }
-            var re = /^(13[0-9]{9})|(15[89][0-9]{8})$/;
-            if (!re.test(productOrder_mobile)) {
-                styleUtil.specialBasicErrorShow($("#label_order_phone"));
-                yn = false;
-            }
-            re = /^[1-9][0-9]{5}$/;
-            if (!re.test(productOrder_post) && productOrder_post !== "") {
-                styleUtil.specialBasicErrorShow($("#label_order_post"));
-                yn = false;
-            }
+            // var re = /^(13[0-9]{9})|(15[89][0-9]{8})$/;
+            // if (!re.test(productOrder_mobile)) {
+            //     styleUtil.specialBasicErrorShow($("#label_order_phone"));
+            //     yn = false;
+            // }
+            // re = /^[1-9][0-9]{5}$/;
+            // if (!re.test(productOrder_post) && productOrder_post !== "") {
+            //     styleUtil.specialBasicErrorShow($("#label_order_post"));
+            //     yn = false;
+            // }
             if (!yn) {
                 window.scrollTo(0, 0);
                 return false;

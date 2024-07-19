@@ -14,7 +14,7 @@
                     dataType: "json",
                     success: function (data) {
                         if (data.success !== true) {
-                            alert("购物车商品删除异常，请稍候再试！");
+                            alert("The shopping cart item deletion was abnormal, please try again later!");
                         }
                         location.href = "/order/cart";
                     },
@@ -22,7 +22,7 @@
 
                     },
                     error: function () {
-                        alert("购物车产品删除异常，请稍后再试！");
+                        alert("The shopping cart item deletion was abnormal, please try again later!");
                         location.href = "/order/cart";
                     }
                 });
@@ -112,10 +112,13 @@
                                                           id="cbx_orderItem_select_${orderItem.productOrderItem_id}"
                                                           name="orderItem_id"><label
                                 for="cbx_orderItem_select_${orderItem.productOrderItem_id}"></label></td>
-                        <td><img class="orderItem_product_image"
+                        <td>
+                            <img class="orderItem_product_image"
                                  src="${orderItem.productOrderItem_product.singleProductImageList[0].productImage_src}"
-                                 style="width: 80px;height: 80px;"/><span class="orderItem_product_name"><a
-                                href="${pageContext.request.contextPath}/product/${orderItem.productOrderItem_product.product_id}">${orderItem.productOrderItem_product.product_name}</a></span>
+                                 style="width: 80px;height: 80px;"/>
+                            <span class="orderItem_product_name">
+                                <a href="${pageContext.request.contextPath}/product/${orderItem.productOrderItem_product.product_id}">${orderItem.productOrderItem_product.product_name}</a>
+                            </span>
                         </td>
                         <td><span
                                 class="orderItem_product_price">$${orderItem.productOrderItem_price/orderItem.productOrderItem_number}</span>

@@ -22,7 +22,7 @@ public class ForeAddressController {
 
     //根据address_areaId获取地址信息-ajax
     @ResponseBody
-    @GetMapping("/{areaId}")
+    @GetMapping(value = "/{areaId}", produces = "application/json;charset=UTF-8")
     protected String getAddressByAreaId(@PathVariable String areaId) {
         JSONObject object = new JSONObject();
         List<Address> addressList = addressService.getList(null, areaId);
