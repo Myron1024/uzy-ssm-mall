@@ -168,7 +168,6 @@ $(function () {
             },
             dataType: "json",
             success: function (data) {
-                debugger;
                 if (data.success) {
                     $(".msg").show().stop(true, true).animate({
                         opacity: 1

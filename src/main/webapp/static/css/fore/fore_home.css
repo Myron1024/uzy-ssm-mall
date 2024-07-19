@@ -54,7 +54,7 @@ nav {
     height: 36px;
     font-size: 18px;
     font-weight: 700;
-    letter-spacing: 5px;
+    /*letter-spacing: 5px;*/
     background-color: #FF0036;
     cursor: pointer;
     color: #ffffff;
@@ -81,6 +81,7 @@ nav {
 
 .mallSearch > ul > li > a {
     color: #999999;
+    font-family: emoji;
 }
 
 .mallSearch li + li {

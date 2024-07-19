@@ -4,12 +4,15 @@ import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.uzykj.mall.entity.Category;
 import com.uzykj.mall.entity.Product;
+import com.uzykj.mall.entity.ProductImage;
 import com.uzykj.mall.entity.User;
 import com.uzykj.mall.service.*;
 import com.uzykj.mall.util.OrderUtil;
 import com.uzykj.mall.util.PageUtil;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -37,7 +40,8 @@ public class ForeProductListController {
     private ReviewService reviewService;
     @Autowired
     private ProductOrderItemService productOrderItemService;
-
+    @Value("${storeService.local.local_file_path}")
+    private String localFilePath;
 
     //转到前台-产品搜索列表页
     @GetMapping()
@@ -91,7 +95,17 @@ public class ForeProductListController {
         }
         // 获取商品列表的对应信息
         for (Product p : productList) {
-            p.setSingleProductImageList(productImageService.getList(p.getProduct_id(), null));
+            List<ProductImage> list = productImageService.getList(p.getProduct_id(), null);
+            list.forEach(x -> {
+                if (StringUtils.isEmpty(x.getProductImage_src())) {
+                    x.setProductImage_src("/static/images/fore/WebsiteImage/noimg.jpg");
+                } else {
+                    if (!x.getProductImage_src().startsWith("http")) {
+                        x.setProductImage_src(localFilePath + x.getProductImage_src());
+                    }
+                }
+            });
+            p.setSingleProductImageList(list);
             p.setProduct_sale_count(productOrderItemService.getSaleCountByProductId(p.getProduct_id()));
             p.setProduct_review_count(reviewService.getTotalByProductId(p.getProduct_id()));
             p.setProduct_category(categoryService.get(p.getProduct_category().getCategory_id()));
@@ -158,7 +172,17 @@ public class ForeProductListController {
         }
         // 获取商品列表的对应信息
         for (Product p : productList) {
-            p.setSingleProductImageList(productImageService.getList(p.getProduct_id(), null));
+            List<ProductImage> list = productImageService.getList(p.getProduct_id(), null);
+            list.forEach(x -> {
+                if (StringUtils.isEmpty(x.getProductImage_src())) {
+                    x.setProductImage_src("/static/images/fore/WebsiteImage/noimg.jpg");
+                } else {
+                    if (!x.getProductImage_src().startsWith("http")) {
+                        x.setProductImage_src(localFilePath + x.getProductImage_src());
+                    }
+                }
+            });
+            p.setSingleProductImageList(list);
             p.setProduct_sale_count(productOrderItemService.getSaleCountByProductId(p.getProduct_id()));
             p.setProduct_review_count(reviewService.getTotalByProductId(p.getProduct_id()));
             p.setProduct_category(categoryService.get(p.getProduct_category().getCategory_id()));

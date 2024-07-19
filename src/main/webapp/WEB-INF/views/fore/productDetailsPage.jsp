@@ -247,7 +247,7 @@
                             <a href="/product/${product.product_id}">
                                 <img src="${product.singleProductImageList[0].productImage_src}">
                             </a>
-                            <p>¥${product.product_sale_price}0</p>
+                            <p>$${product.product_sale_price}0</p>
                         </div>
                     </li>
                 </c:forEach>

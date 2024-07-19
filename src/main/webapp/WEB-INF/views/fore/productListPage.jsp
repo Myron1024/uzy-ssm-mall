@@ -67,19 +67,18 @@
                 <c:forEach items="${requestScope.productList}" var="product">
                     <div class="context_productStyle">
                         <div class="context_product">
-                            <a href="${pageContext.request.contextPath}/product/${product.product_id}"
-                               target="_blank"><img class="context_product_imgMain"
-                                                    src="${product.singleProductImageList[0].productImage_src}"/></a>
+                            <a href="${pageContext.request.contextPath}/product/${product.product_id}" target="_blank">
+                                <img class="context_product_imgMain" src="${product.singleProductImageList[0].productImage_src == null ? "/static/images/fore/WebsiteImage/noimg.jpg" : product.singleProductImageList[0].productImage_src}"/>
+                            </a>
                             <ul class="context_product_imgList">
                                 <c:forEach items="${product.singleProductImageList}" var="img">
-                                    <li><img
-                                            src="${img.productImage_src}"/>
+                                    <li>
+                                        <img src="${img.productImage_src == null ? "/static/images/fore/WebsiteImage/noimg.jpg" : img.productImage_src}" />
                                     </li>
                                 </c:forEach>
                             </ul>
                             <p class="context_product_price"><span>$</span>${product.product_sale_price}</p>
-                            <p class="context_product_name"><a href="/product/${product.product_id}"
-                                                               target="_blank">${product.product_name}</a></p>
+                            <p class="context_product_name"><a href="/product/${product.product_id}" target="_blank">${product.product_name}</a></p>
                             <%-- <p class="context_product_shop"><span>贤趣${product.product_category.category_name}旗舰店</span> --%>
                             </p>
                             <p class="context_product_status">

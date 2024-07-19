@@ -48,9 +48,7 @@ public class ForeHomeController {
         //SessionMap
         User user = (User) session.getAttribute("USER_SESSION");
         map.put("user", user);
-
-        String filePath = session.getServletContext().getRealPath("/") + localFilePath;
-
+//        String filePath = session.getServletContext().getRealPath("/") + localFilePath;
         List<Category> categoryList = categoryService.getList(null, null);
         for (Category category : categoryList) {
             log.info("获取分类id为{}的产品集合，按产品ID倒序排序", category.getCategory_id());

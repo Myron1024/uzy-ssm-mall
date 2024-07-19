@@ -7,7 +7,9 @@ import com.uzykj.mall.entity.*;
 import com.uzykj.mall.service.*;
 import com.uzykj.mall.util.PageUtil;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -43,13 +45,14 @@ public class ForeProductDetailsController {
     @Autowired
     private ProductOrderItemService productOrderItemService;
 
+    @Value("${storeService.local.local_file_path}")
+    private String localFilePath;
 
     //转到前台-产品详情页
     @GetMapping("product/{pid}")
     public String goToPage(HttpSession session, Map<String, Object> map,
                            @PathVariable("pid") String pid /*产品ID*/) {
         User user = (User) session.getAttribute("USER_SESSION");
-        Integer userId = (Integer) session.getAttribute("USER_ID");
         map.put("user", user);
 
         Integer product_id = Integer.parseInt(pid);
@@ -61,6 +64,15 @@ public class ForeProductDetailsController {
         product.setProduct_category(categoryService.get(product.getProduct_category_id()));
         // 获取产品子信息-产品图片信息
         List<ProductImage> productImageList = productImageService.getList(product_id, null);
+        productImageList.forEach(x -> {
+            if (StringUtils.isEmpty(x.getProductImage_src())) {
+                x.setProductImage_src("/static/images/fore/WebsiteImage/noimg.jpg");
+            } else {
+                if (!x.getProductImage_src().startsWith("http")) {
+                    x.setProductImage_src(localFilePath + x.getProductImage_src());
+                }
+            }
+        });
         List<ProductImage> singleProductImageList = new ArrayList<>(5);
         List<ProductImage> detailsProductImageList = new ArrayList<>(8);
         for (ProductImage productImage : productImageList) {
@@ -115,7 +127,17 @@ public class ForeProductDetailsController {
         if (loveProductList != null) {
             // 获取产品列表的相应的一张预览图片
             for (Product loveProduct : loveProductList) {
-                loveProduct.setSingleProductImageList(productImageService.getList(loveProduct.getProduct_id(), new PageUtil(0, 1)));
+                List<ProductImage> list = productImageService.getList(loveProduct.getProduct_id(), new PageUtil(0, 1));
+                list.forEach(x -> {
+                    if (StringUtils.isEmpty(x.getProductImage_src())) {
+                        x.setProductImage_src("/static/images/fore/WebsiteImage/noimg.jpg");
+                    } else {
+                        if (!x.getProductImage_src().startsWith("http")) {
+                            x.setProductImage_src(localFilePath + x.getProductImage_src());
+                        }
+                    }
+                });
+                loveProduct.setSingleProductImageList(list);
             }
         }
         // 获取分类列表
@@ -209,7 +231,17 @@ public class ForeProductDetailsController {
         if (loveProductList != null) {
             log.info("获取产品列表的相应的一张预览图片");
             for (Product loveProduct : loveProductList) {
-                loveProduct.setSingleProductImageList(productImageService.getList(loveProduct.getProduct_id(), new PageUtil(0, 1)));
+                List<ProductImage> list = productImageService.getList(loveProduct.getProduct_id(), new PageUtil(0, 1));
+                list.forEach(x -> {
+                    if (StringUtils.isEmpty(x.getProductImage_src())) {
+                        x.setProductImage_src("/static/images/fore/WebsiteImage/noimg.jpg");
+                    } else {
+                        if (!x.getProductImage_src().startsWith("http")) {
+                            x.setProductImage_src(localFilePath + x.getProductImage_src());
+                        }
+                    }
+                });
+                loveProduct.setSingleProductImageList(list);
             }
         }
 

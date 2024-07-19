@@ -7,7 +7,9 @@ import com.uzykj.mall.service.*;
 import com.uzykj.mall.util.OrderUtil;
 import com.uzykj.mall.util.PageUtil;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
@@ -44,6 +46,8 @@ public class ForeOrderController {
     private ReviewService reviewService;
     @Autowired
     private LastIDService lastIDService;
+    @Value("${storeService.local.local_file_path}")
+    private String localFilePath;
 
     //转到前台-订单列表页
     @GetMapping("/")
@@ -458,7 +462,17 @@ public class ForeOrderController {
                     // 获取订单项产品信息
                     product = productService.get(productOrderItem.getProductOrderItem_product().getProduct_id());
                     if (product != null) {
-                        product.setSingleProductImageList(productImageService.getList(product.getProduct_id(), new PageUtil(0, 1)));
+                        List<ProductImage> list = productImageService.getList(product.getProduct_id(), new PageUtil(0, 1));
+                        list.forEach(x -> {
+                            if (StringUtils.isEmpty(x.getProductImage_src())) {
+                                x.setProductImage_src("/static/images/fore/WebsiteImage/noimg.jpg");
+                            } else {
+                                if (!x.getProductImage_src().startsWith("http")) {
+                                    x.setProductImage_src(localFilePath + x.getProductImage_src());
+                                }
+                            }
+                        });
+                        product.setSingleProductImageList(list);
                     }
                 }
             }

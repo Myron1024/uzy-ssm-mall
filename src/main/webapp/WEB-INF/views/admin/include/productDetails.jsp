@@ -279,7 +279,7 @@
                         $(".loader").css("display", "none");
                         //清空原有数据
                         var listDiv = $(".details_property_list");
-                        listDiv.empty().append("<span class='details_title text_info'>属性值信息</span>");
+                        listDiv.empty().append("<span class='details_title text_info'>Attribute Information</span>");
                         //显示产品属性数据
                         if(data.propertyList.length > 0){
                             for(var i = 0;i<data.propertyList.length;i++){
@@ -410,11 +410,9 @@
                     }
                 },
                 beforeSend: function () {
-                    debugger;
                     $("#btn_product_save").attr("disabled", true).val("Saving...");
                 },
                 error: function () {
-
                     debugger;
                 }
             });
@@ -473,9 +471,11 @@
     </div>
     <div class="frm_div">
         <label class="frm_label text_info" id="lbl_product_name" for="input_product_name">Product Name</label>
-        <input class="frm_input" id="input_product_name" type="text" maxlength="50" value="${requestScope.product.product_name}"/>
+        <input class="frm_input" id="input_product_name" type="text" maxlength="100" style="width: 530px;" value="${requestScope.product.product_name}"/>
+    </div>
+    <div class="frm_div">
         <label class="frm_label text_info" id="lbl_product_title" for="input_product_title">Product Title</label>
-        <input class="frm_input" id="input_product_title" type="text" maxlength="50" value="${requestScope.product.product_title}"/>
+        <input class="frm_input" id="input_product_title" type="text" maxlength="500" style="width: 530px;" value="${requestScope.product.product_title}"/>
     </div>
     <div class="frm_div_last">
         <label class="frm_label text_info" id="lbl_product_price" for="input_product_price">Original Price</label>

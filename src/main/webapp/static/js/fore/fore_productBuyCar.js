@@ -147,20 +147,19 @@ function create(obj) {
         data: JSON.stringify(orderItemMap),
         traditional: true,
         success: function (data) {
-            debugger
             data = typeof data === "string" ? JSON.parse(data) : data;
             if (data.success) {
                 location.href = "/order/create/byCart?order_item_list=" + data.orderItemIDArray;
                 return true;
             } else {
-                alert("购物车商品结算异常，请稍候再试！");
+                alert("The settlement of shopping cart items is abnormal, please try again later!");
                 location.href = "/order/cart";
             }
         },
         beforeSend: function () {
         },
         error: function () {
-            alert("购物车商品结算异常，请稍候再试！");
+            alert("The settlement of shopping cart items is abnormal, please try again later!");
             location.href = "/order/cart";
         }
     });
