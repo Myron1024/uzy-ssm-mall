@@ -1,6 +1,6 @@
-# 柚子云电子商城
-[![stars](https://badgen.net/github/stars/ghostxbh/uzy-ssm-mall?icon=github&color=4ab8a1)](https://github.com/ghostxbh/uzy-ssm-mall)
-[![forks](https://badgen.net/github/forks/ghostxbh/uzy-ssm-mall?icon=github&color=4ab8a1)](https://github.com/ghostxbh/uzy-ssm-mall)
+# SDLC 课程项目
+
+# ELITE电子商城
 
 ## 项目介绍
 基于Springboot框架搭建的电子商务平台手脚架，静态资源储存可使用OSS ([七牛云-对象存储](https://www.qiniu.com/products/kodo)) ，
@@ -67,15 +67,3 @@
 - 前台地址：[http://127.0.0.1:8080/mall](http://127.0.0.1:8010/mall)
 
 - 后台管理：[http://127.0.0.1:8080/mall/admin](http://127.0.0.1:8010/mall/admin)
-
-### MIT
-
-## 贡献者们
-
-> 感谢所有的贡献者们！
-
-[![Star History Chart](https://contrib.rocks/image?repo=ghostxbh/uzy-ssm-mall)](https://github.com/ghostxbh/uzy-ssm-mall/graphs/contributors)
-
-## Star历史
-
-![Star History Chart](https://api.star-history.com/svg?repos=ghostxbh/uzy-ssm-mall&type=Date)
